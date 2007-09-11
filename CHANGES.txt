@@ -1,0 +1,61 @@
+Here the Auto Versioning plugin 0.7 New Feature
+
+Changes:
+  - Added a change log generator
+
+On v0.6:(Now you will need a codeblocks revision >= 4324)
+  - Code optimizations( thanks to killerbot)
+  - Now using the cbEVT_COMPILER_STARTED event fixed on codeblocks revision 4324.
+  - Now the commitment of changes is made just before compilation.
+  - Fixed: The "Ask to commit changes" message box, now appears just before compilation takes place.
+
+On v0.5:
+  - Added scheme editor.
+  - Created menu entries on the project menu.
+  - Changed the plugin from cbToolPlugin to cbPlugin.
+  - Removed some unnecessary headers
+  - Minor fixes.
+
+On v0.4.1:
+  - Fixed trash generated the first time configured with a project.  - other minor fixes
+
+On v0.4
+  - Updated the dialog version editor now using wxNotebook.
+  - Added software status variables.
+  - Added header non replication security #ifndef #define #endif
+
+On v0.3.1:
+  - Added SaveAllFiles after committing to clear the modified flag.
+
+On v0.3:
+  - The console window is now hidden while updating the svn revision.
+  - Updated svn query function from some inlogical code introduced by.
+  - Added option to commit changes before auto incrementing.
+  - Auto incrementation now behaves better and before compilation.
+
+On v0.2.2:
+  -Shortened variable names (realized that I made really long names  Embarassed) .
+  -Fixed version.h output on dates variables declared longs, now declared char[].
+
+
+On v0.2.1:
+  -Removed Unnecessary headers on some parts of the code.
+  -Updated to the new method of listening to events on codeblocks.
+  -Revision now increments randomly to a maximum of 10 instead of 30.
+  -updated linux and windows project files. (Not tested the linux project file, I got to test it on ubuntu).
+
+
+On v0.2:
+  -Using the code of autorevision.cpp implemented SVN Revision check:
+    * static char SVN_REVISION[]
+    * static char SVN_DATE[]
+  -Fixed bad output on version.h produced by wxString operator<< with long variables.
+
+On v0.1:
+  -Increment Revision and Build Number automatically when a file is modified.
+  -Generates version.h with easy to use variable declarations.
+  -Option to generate dates and ubuntu version format.
+  -Scheme to auto-increment  the Major and Minor version (optionally).
+  -Counts all the compilations on Build Count.
+  -And may be I forgot Something....
+

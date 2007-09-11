@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="AutoVersioning-Linux" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="default">
+				<Option output="autoversioning" prefix_auto="1" extension_auto="1" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option host_application="codeblocks" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="`pkg-config --cflags codeblocks`" />
+					<Add option="`wx-config --cflags`" />
+					<Add directory="$(#CB)" />
+				</Compiler>
+				<Linker>
+					<Add option="`pkg-config --libs codeblocks`" />
+					<Add option="`wx-config --libs`" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="zip -j9 autoversioning.zip manifest.xml" />
+					<Add after="zip -j9 autoversioning.cbplugin autoversioning.so autoversioning.zip" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="AutoVersioning.cpp" />
+		<Unit filename="AutoVersioning.h" />
+		<Unit filename="avChangesDlg.cpp" />
+		<Unit filename="avChangesDlg.h" />
+		<Unit filename="avConfigFile.cpp" />
+		<Unit filename="avConfigFile.h" />
+		<Unit filename="avStrCon.cpp" />
+		<Unit filename="avStrCon.h" />
+		<Unit filename="avSvnRevision.cpp" />
+		<Unit filename="avSvnRevision.h" />
+		<Unit filename="avVersionEditorDlg.cpp" />
+		<Unit filename="avVersionEditorDlg.h" />
+		<Unit filename="license.txt" />
+		<Unit filename="manifest.xml" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="avVersionEditorDlg.cpp" main="avVersionEditorDlg" init_handlers="necessary" language="CPP" />
+				<resources>
+					<wxDialog wxs="wxsmith/avVersionEditorDlg.wxs" src="avVersionEditorDlg.cpp" hdr="avVersionEditorDlg.h" name="avVersionEditorDlg" language="CPP" />
+					<wxDialog wxs="wxsmith/avChangesDlg.wxs" src="avChangesDlg.cpp" hdr="avChangesDlg.h" name="avChangesDlg" language="CPP" />
+				</resources>
+			</wxsmith>
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

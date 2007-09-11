@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_plugin_manifest_file>
+    <SdkVersion major="1" minor="10" release="0" />
+    <Plugin name="AutoVersioning">
+        <Value title="Auto Versioning" />
+        <Value version="0.7" />
+        <Value description="Auto increments the version and build number of your application every time a change has been made and stores it in version.h with easy to use variable declarations. Also have a feature for committing changes a la SVN style, a version scheme editor and a change log generator.
+
+Example:
+
+   #include &quot;version.h&quot;
+   string version = AutoVersion::FULLVERSION_STRING;
+
+Declarations available in the AutoVersion namespace:
+
+  1) Date Version Types
+	  static char DATE[]
+	  static char MONTH[]
+	  static char YEAR[]
+	  static double UBUNTU_VERSION_STYLE
+
+  2) Software Status
+	  static char STATUS[]
+	  static char STATUS_SHORT[]
+
+  3) Standard Version Type
+	  static long MAJOR
+	  static long MINOR
+	  static long BUILD
+      static long REVISION
+
+  4) Miscellaneous Version Types
+	  static long BUILDS_COUNT
+	  #define RC_FILEVERSION
+	  #define RC_FILEVERSION_STRING
+	  static char FULLVERSION_STRING[]
+
+  5) SVN Version
+	  static char SVN_REVISION[]
+	  static char SVN_DATE[]
+" />
+        <Value author="JGM" />
+        <Value authorEmail="jgmdev@gmail.com" />
+        <Value authorWebsite="" />
+        <Value thanksTo="Killerbot - Code Optimizations" />
+        <Value license="GPL" />
+    </Plugin>
+</CodeBlocks_plugin_manifest_file>
