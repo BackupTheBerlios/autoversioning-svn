@@ -52,6 +52,7 @@ const long avVersionEditorDlg::ID_DATES_CHECK = wxNewId();
 const long avVersionEditorDlg::ID_STATICLINE3 = wxNewId();
 const long avVersionEditorDlg::ID_COMMIT_CHECK = wxNewId();
 const long avVersionEditorDlg::ID_ASKCOMMIT_CHECK = wxNewId();
+const long avVersionEditorDlg::ID_HEADERLANGUAGE_RADIOBOX = wxNewId();
 const long avVersionEditorDlg::ID_STATICLINE1 = wxNewId();
 const long avVersionEditorDlg::ID_SVN_CHECK = wxNewId();
 const long avVersionEditorDlg::ID_SVNDIR_TEXT = wxNewId();
@@ -83,7 +84,7 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
 	wxFont thisFont(10,wxDEFAULT,wxFONTSTYLE_NORMAL,wxNORMAL,false,wxEmptyString,wxFONTENCODING_DEFAULT);
 	SetFont(thisFont);
 	mainSizer = new wxBoxSizer(wxVERTICAL);
-	nbAutoVersioning = new wxNotebook(this, ID_AV_NOTEBOOK, wxDefaultPosition, wxSize(396,274), 0, _T("ID_AV_NOTEBOOK"));
+	nbAutoVersioning = new wxNotebook(this, ID_AV_NOTEBOOK, wxDefaultPosition, wxSize(396,279), 0, _T("ID_AV_NOTEBOOK"));
 	pnlVersionValues = new wxPanel(nbAutoVersioning, ID_VALUES_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_VALUES_PANEL"));
 	valuesSizer = new wxBoxSizer(wxVERTICAL);
 	BoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
@@ -205,15 +206,30 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
 	settingsSizer->Add(chkDates, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	StaticLine3 = new wxStaticLine(pnlSettings, ID_STATICLINE3, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE3"));
 	settingsSizer->Add(StaticLine3, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 1);
+	BoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
+	BoxSizer7 = new wxBoxSizer(wxVERTICAL);
 	chkCommit = new wxCheckBox(pnlSettings, ID_COMMIT_CHECK, _("Commit changes"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_COMMIT_CHECK"));
 	chkCommit->SetValue(false);
 	chkCommit->SetToolTip(_("If you check this you have to\ncommit changes and then the\nversion would increment."));
-	settingsSizer->Add(chkCommit, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+	BoxSizer7->Add(chkCommit, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	chkAskCommit = new wxCheckBox(pnlSettings, ID_ASKCOMMIT_CHECK, _("Ask to commit changes"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_ASKCOMMIT_CHECK"));
 	chkAskCommit->SetValue(false);
 	chkAskCommit->Disable();
 	chkAskCommit->SetToolTip(_("Ask you to commit every time\na change has been made to the \nsource code, before the compilation\ntakes effect."));
-	settingsSizer->Add(chkAskCommit, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+	BoxSizer7->Add(chkAskCommit, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+	BoxSizer5->Add(BoxSizer7, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+	BoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
+	wxString wxRadioBoxChoices_rbHeaderLanguage[2] =
+	{
+	    _("C"),
+	    _("C++")
+	};
+	rbHeaderLanguage = new wxRadioBox(pnlSettings, ID_HEADERLANGUAGE_RADIOBOX, _("Header language"), wxDefaultPosition, wxDefaultSize, 2, wxRadioBoxChoices_rbHeaderLanguage, 1, 0, wxDefaultValidator, _T("ID_HEADERLANGUAGE_RADIOBOX"));
+	rbHeaderLanguage->SetSelection(1);
+	rbHeaderLanguage->SetToolTip(_("Sets the language output of version.h file"));
+	BoxSizer8->Add(rbHeaderLanguage, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+	BoxSizer5->Add(BoxSizer8, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+	settingsSizer->Add(BoxSizer5, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	StaticLine1 = new wxStaticLine(pnlSettings, ID_STATICLINE1, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
 	settingsSizer->Add(StaticLine1, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	chkSvn = new wxCheckBox(pnlSettings, ID_SVN_CHECK, _("svn enabled"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_SVN_CHECK"));
@@ -425,6 +441,15 @@ long avVersionEditorDlg::CommitAsk(long value){
 
     return m_askCommit;
 }
+
+wxString avVersionEditorDlg::Language(wxString value){
+    if(!value.IsEmpty()){
+        m_language = value;
+        rbHeaderLanguage->SetStringSelection(value);
+    }
+
+    return m_language;
+}
 //}
 
 //{Software Status
@@ -545,6 +570,7 @@ void avVersionEditorDlg::OnAcceptClick(wxCommandEvent& event)
     m_svnDirectory = txtSvnDir->GetValue();
     m_commit = chkCommit->IsChecked()?1:0;
     m_askCommit = chkAskCommit->IsChecked()?1:0;
+    m_language = rbHeaderLanguage->GetStringSelection();
 
     m_status = cmbStatus->GetValue();
     m_statusAbbreviation = cmbAbbreviation->GetValue();

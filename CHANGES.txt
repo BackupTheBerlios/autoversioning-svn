@@ -1,6 +1,9 @@
-Here the Auto Versioning plugin 0.7 New Feature
+Here the Auto Versioning plugin 0.8 New Feature
 
 Changes:
+  - Added a header language selector on the settings tab for supporting the C language.
+
+On v0.7:
   - Added a change log generator
 
 On v0.6:(Now you will need a codeblocks revision >= 4324)

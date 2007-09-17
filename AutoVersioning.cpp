@@ -40,6 +40,7 @@ static const wxString SVN_DIRECTORY = _("Svn Directory");
 
 static const wxString COMMIT = _("Commit");
 static const wxString COMMIT_ASK = _("Commit Ask");
+static const wxString LANGUAGE = _("Language");
 
 static const wxString STATUS = _("Status");
 static const wxString STATUS_ABBREVIATION = _("Status Abbreviation");
@@ -353,6 +354,7 @@ void AutoVersioning::CreateVersionFile(bool update)
         m_versionEditorDialog->SvnDirectory(m_versionConfigPath.Remove(m_versionConfigPath.Len() - wxStrlen(_("/version.ini"))));
         m_versionEditorDialog->Commit(0);
         m_versionEditorDialog->CommitAsk(0);
+        m_versionEditorDialog->Language(_("C++"));
         m_versionEditorDialog->Status(_("Alpha"));
         m_versionEditorDialog->StatusAbbreviation(_("a"));
         m_versionEditorDialog->MinorMaximun(10);
@@ -383,6 +385,8 @@ void AutoVersioning::CreateVersionFile(bool update)
 
     m_versionConfig.WriteValue(COMMIT, m_versionEditorDialog->Commit());
     m_versionConfig.WriteValue(COMMIT_ASK, m_versionEditorDialog->CommitAsk());
+
+    m_versionConfig.WriteValue(LANGUAGE, m_versionEditorDialog->Language());
 
     m_versionConfig.WriteValue(STATUS, m_versionEditorDialog->Status());
     m_versionConfig.WriteValue(STATUS_ABBREVIATION, m_versionEditorDialog->StatusAbbreviation());
@@ -434,7 +438,7 @@ void AutoVersioning::UpdateVersionHeader()
     long svn = m_versionConfig.ReadValue( SVN );
     wxString status = m_versionConfig.ReadString( STATUS );
     wxString statusAbbreviation = m_versionConfig.ReadString( STATUS_ABBREVIATION );
-
+    wxString language  = m_versionConfig.ReadString( LANGUAGE );
     wxString svnDirectory = m_versionConfig.ReadString( SVN_DIRECTORY );
 
     m_versionConfig.Close();
@@ -442,8 +446,11 @@ void AutoVersioning::UpdateVersionHeader()
     headerOutput << _("#ifndef VERSION_H") << _("\n");
     headerOutput << _("#define VERSION_H") << _("\n");
     headerOutput << _("\n");
-    headerOutput << _("namespace AutoVersion{") << _("\n");
-    headerOutput << _("\t") << _("\n");
+
+    if(language == wxT("C++")){
+        headerOutput << _("namespace AutoVersion{") << _("\n");
+        headerOutput << _("\t") << _("\n");
+    }
 
     if (date == 1)
     {
@@ -502,7 +509,11 @@ void AutoVersioning::UpdateVersionHeader()
     }
 
     headerOutput << _("\t") << _("\n");
-    headerOutput << _("}") << _("\n");
+
+    if(language == wxT("C++")){
+        headerOutput << _("}") << _("\n");
+    }
+
     headerOutput << _("#endif //VERSION_h\n");
 
     wxFile versionHeaderFile(m_versionHeaderPath,wxFile::write);
@@ -527,6 +538,7 @@ void AutoVersioning::UpdateEditorDialog()
     m_versionEditorDialog->SvnDirectory(m_versionConfig.ReadString( SVN_DIRECTORY ));
     m_versionEditorDialog->Commit(m_versionConfig.ReadValue( COMMIT ));
     m_versionEditorDialog->CommitAsk(m_versionConfig.ReadValue( COMMIT_ASK ));
+    m_versionEditorDialog->Language(m_versionConfig.ReadString( LANGUAGE ));
 
     m_versionEditorDialog->Status(m_versionConfig.ReadString( STATUS ));
     m_versionEditorDialog->StatusAbbreviation(m_versionConfig.ReadString( STATUS_ABBREVIATION ));

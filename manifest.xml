@@ -3,15 +3,16 @@
     <SdkVersion major="1" minor="10" release="0" />
     <Plugin name="AutoVersioning">
         <Value title="Auto Versioning" />
-        <Value version="0.7" />
+        <Value version="0.8" />
         <Value description="Auto increments the version and build number of your application every time a change has been made and stores it in version.h with easy to use variable declarations. Also have a feature for committing changes a la SVN style, a version scheme editor and a change log generator.
 
 Example:
 
    #include &quot;version.h&quot;
-   string version = AutoVersion::FULLVERSION_STRING;
+   printf(&quot;v%d.%d.%d.%d&quot;,MAJOR,MINOR,BUILD,REVISION); //C example
+   string version = AutoVersion::FULLVERSION_STRING; //C++ example
 
-Declarations available in the AutoVersion namespace:
+Declarations available in the AutoVersion namespace on C++ and global on C:
 
   1) Date Version Types
 	  static char DATE[]

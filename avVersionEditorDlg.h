@@ -18,6 +18,7 @@
 #include <wx/dialog.h>
 #include <wx/notebook.h>
 #include <wx/panel.h>
+#include <wx/radiobox.h>
 #include <wx/sizer.h>
 #include <wx/statline.h>
 #include <wx/stattext.h>
@@ -46,6 +47,7 @@ class avVersionEditorDlg: public wxDialog
     wxString m_status;
     wxString m_statusAbbreviation;
     wxString m_changesTitle;
+    wxString m_language;
 
     public:
 		avVersionEditorDlg(wxWindow* parent,wxWindowID id = -1);
@@ -88,6 +90,7 @@ class avVersionEditorDlg: public wxDialog
 		static const long ID_STATICLINE3;
 		static const long ID_COMMIT_CHECK;
 		static const long ID_ASKCOMMIT_CHECK;
+		static const long ID_HEADERLANGUAGE_RADIOBOX;
 		static const long ID_STATICLINE1;
 		static const long ID_SVN_CHECK;
 		static const long ID_SVNDIR_TEXT;
@@ -114,6 +117,7 @@ class avVersionEditorDlg: public wxDialog
 		void OnCmbStatusSelect(wxCommandEvent& event);
 		void OnCmbAbbreviationSelect(wxCommandEvent& event);
 		void OnChkChangesClick(wxCommandEvent& event);
+		void OnnbAutoVersioningPageChanged(wxNotebookEvent& event);
 		//*)
 
 		//(*Declarations(avVersionEditorDlg)
@@ -165,8 +169,12 @@ class avVersionEditorDlg: public wxDialog
 		wxCheckBox* chkAutoIncrement;
 		wxCheckBox* chkDates;
 		wxStaticLine* StaticLine3;
+		wxBoxSizer* BoxSizer5;
+		wxBoxSizer* BoxSizer7;
 		wxCheckBox* chkCommit;
 		wxCheckBox* chkAskCommit;
+		wxBoxSizer* BoxSizer8;
+		wxRadioBox* rbHeaderLanguage;
 		wxStaticLine* StaticLine1;
 		wxCheckBox* chkSvn;
 		wxBoxSizer* svnSizer;
@@ -197,6 +205,7 @@ class avVersionEditorDlg: public wxDialog
         long Dates(long value = 5);
         long Commit(long value = 5);
         long CommitAsk(long value = 5);
+        wxString Language(wxString value = _(""));
 
         long MinorMaximun(long value = -1);
         long BuildMaximun(long value = -1);
