@@ -12,12 +12,12 @@
 				<Option compiler="gcc" />
 				<Option host_application="codeblocks" />
 				<Compiler>
-					<Add option="-g" />
 					<Add option="`pkg-config --cflags codeblocks`" />
 					<Add option="`wx-config --cflags`" />
 					<Add directory="$(#CB)" />
 				</Compiler>
 				<Linker>
+					<Add option="-s" />
 					<Add option="`pkg-config --libs codeblocks`" />
 					<Add option="`wx-config --libs`" />
 				</Linker>
@@ -27,6 +27,9 @@
 				</ExtraCommands>
 			</Target>
 		</Build>
+		<Compiler>
+			<Add option="-g" />
+		</Compiler>
 		<Unit filename="AutoVersioning.cpp" />
 		<Unit filename="AutoVersioning.h" />
 		<Unit filename="avChangesDlg.cpp" />
