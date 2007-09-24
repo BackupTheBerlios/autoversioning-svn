@@ -79,12 +79,14 @@ END_EVENT_TABLE()
 avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
 {
 	//(*Initialize(avVersionEditorDlg)
-	Create(parent, wxID_ANY, _("Auto Versioning Editor"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxCAPTION, _T("wxID_ANY"));
+	Create(parent, wxID_ANY, _("Auto Versioning Editor"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxCAPTION|wxRESIZE_BORDER, _T("wxID_ANY"));
 	SetClientSize(wxSize(394,330));
 	wxFont thisFont(10,wxDEFAULT,wxFONTSTYLE_NORMAL,wxNORMAL,false,wxEmptyString,wxFONTENCODING_DEFAULT);
 	SetFont(thisFont);
 	mainSizer = new wxBoxSizer(wxVERTICAL);
 	nbAutoVersioning = new wxNotebook(this, ID_AV_NOTEBOOK, wxDefaultPosition, wxSize(396,279), 0, _T("ID_AV_NOTEBOOK"));
+	nbAutoVersioning->SetMaxSize(wxSize(-1,-1));
+	nbAutoVersioning->SetFocus();
 	pnlVersionValues = new wxPanel(nbAutoVersioning, ID_VALUES_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_VALUES_PANEL"));
 	valuesSizer = new wxBoxSizer(wxVERTICAL);
 	BoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
@@ -217,18 +219,18 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
 	chkAskCommit->Disable();
 	chkAskCommit->SetToolTip(_("Ask you to commit every time\na change has been made to the \nsource code, before the compilation\ntakes effect."));
 	BoxSizer7->Add(chkAskCommit, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	BoxSizer5->Add(BoxSizer7, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+	BoxSizer5->Add(BoxSizer7, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
-	wxString wxRadioBoxChoices_rbHeaderLanguage[2] =
+	wxString wxRadioBoxChoices_rbHeaderLanguage[2] = 
 	{
 	    _("C"),
 	    _("C++")
 	};
-	rbHeaderLanguage = new wxRadioBox(pnlSettings, ID_HEADERLANGUAGE_RADIOBOX, _("Header language"), wxDefaultPosition, wxDefaultSize, 2, wxRadioBoxChoices_rbHeaderLanguage, 1, 0, wxDefaultValidator, _T("ID_HEADERLANGUAGE_RADIOBOX"));
+	rbHeaderLanguage = new wxRadioBox(pnlSettings, ID_HEADERLANGUAGE_RADIOBOX, _("Header language"), wxDefaultPosition, wxDefaultSize, 2, wxRadioBoxChoices_rbHeaderLanguage, 2, wxRA_HORIZONTAL, wxDefaultValidator, _T("ID_HEADERLANGUAGE_RADIOBOX"));
 	rbHeaderLanguage->SetSelection(1);
 	rbHeaderLanguage->SetToolTip(_("Sets the language output of version.h file"));
 	BoxSizer8->Add(rbHeaderLanguage, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	BoxSizer5->Add(BoxSizer8, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+	BoxSizer5->Add(BoxSizer8, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	settingsSizer->Add(BoxSizer5, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	StaticLine1 = new wxStaticLine(pnlSettings, ID_STATICLINE1, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
 	settingsSizer->Add(StaticLine1, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);

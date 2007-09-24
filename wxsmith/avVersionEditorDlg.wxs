@@ -3,7 +3,7 @@
 	<object class="wxDialog" name="avVersionEditorDlg">
 		<title>Auto Versioning Editor</title>
 		<centered>1</centered>
-		<style>wxSTAY_ON_TOP|wxCAPTION</style>
+		<style>wxSTAY_ON_TOP|wxCAPTION|wxRESIZE_BORDER</style>
 		<size>394,330</size>
 		<font>
 			<size>10</size>
@@ -14,6 +14,8 @@
 			<object class="sizeritem">
 				<object class="wxNotebook" name="ID_AV_NOTEBOOK" variable="nbAutoVersioning" member="yes">
 					<size>396,279</size>
+					<focused>1</focused>
+					<maxsize>-1,-1</maxsize>
 					<object class="notebookpage">
 						<object class="wxPanel" name="ID_VALUES_PANEL" variable="pnlVersionValues" member="yes">
 							<object class="wxBoxSizer" variable="valuesSizer" member="yes">
@@ -375,7 +377,7 @@
 													<border>5</border>
 												</object>
 											</object>
-											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+											<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 											<border>5</border>
 											<option>1</option>
 										</object>
@@ -389,6 +391,8 @@
 															<item>C++</item>
 														</content>
 														<default>1</default>
+														<dimension>2</dimension>
+														<style>wxRA_HORIZONTAL</style>
 														<tooltip>Sets the language output of version.h file</tooltip>
 													</object>
 													<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -396,7 +400,7 @@
 													<option>1</option>
 												</object>
 											</object>
-											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+											<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 											<border>5</border>
 											<option>1</option>
 										</object>

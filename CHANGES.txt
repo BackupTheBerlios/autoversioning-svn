@@ -1,6 +1,9 @@
-Here the Auto Versioning plugin 0.8 New Feature
+Here the Auto Versioning plugin 0.8.1
 
 Changes:
+  - Minor change to settings panel to adjust the Header output radiobox for windows
+
+On v0.8:
   - Added a header language selector on the settings tab for supporting the C language.
 
 On v0.7:
