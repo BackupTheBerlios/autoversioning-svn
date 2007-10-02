@@ -1,7 +1,10 @@
-Here the Auto Versioning plugin 0.8.1
+Here the Auto Versioning plugin 0.8.2
 
 Changes:
-  - Minor change to settings panel to adjust the Header output radiobox for windows
+  - Cleaned some unnecesary translated strings. (Now it should work faster)
+
+On v0.8.1:
+  - Minor change to settings panel to adjust the Header output radiobox for windows.
 
 On v0.8:
   - Added a header language selector on the settings tab for supporting the C language.
@@ -19,11 +22,12 @@ On v0.5:
   - Added scheme editor.
   - Created menu entries on the project menu.
   - Changed the plugin from cbToolPlugin to cbPlugin.
-  - Removed some unnecessary headers
+  - Removed some unnecessary headers.
   - Minor fixes.
 
 On v0.4.1:
-  - Fixed trash generated the first time configured with a project.  - other minor fixes
+  - Fixed trash generated the first time configured with a project.  
+  - other minor fixes
 
 On v0.4
   - Updated the dialog version editor now using wxNotebook.

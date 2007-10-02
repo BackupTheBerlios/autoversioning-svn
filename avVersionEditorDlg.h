@@ -200,12 +200,12 @@ class avVersionEditorDlg: public wxDialog
         long Count(long value = -1);
 
         long Svn(long value = 5);
-        wxString SvnDirectory(wxString value = _(""));
+        wxString SvnDirectory(wxString value = _T(""));
         long Auto(long value = 5);
         long Dates(long value = 5);
         long Commit(long value = 5);
         long CommitAsk(long value = 5);
-        wxString Language(wxString value = _(""));
+        wxString Language(wxString value = _T(""));
 
         long MinorMaximun(long value = -1);
         long BuildMaximun(long value = -1);
@@ -213,11 +213,11 @@ class avVersionEditorDlg: public wxDialog
         long RevisionRandomMaximun(long value = -1);
         long BuildTimesToMinorIncrement(long value = -1);
 
-        wxString Status(wxString value = _(""));
-        wxString StatusAbbreviation(wxString value = _(""));
+        wxString Status(wxString value = _T(""));
+        wxString StatusAbbreviation(wxString value = _T(""));
 
         long Changes(long value = 5);
-        wxString ChangesTitle(wxString value = _(""));
+        wxString ChangesTitle(wxString value = _T(""));
 
 		DECLARE_EVENT_TABLE()
 };

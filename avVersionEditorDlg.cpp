@@ -80,11 +80,11 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
 {
 	//(*Initialize(avVersionEditorDlg)
 	Create(parent, wxID_ANY, _("Auto Versioning Editor"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxCAPTION|wxRESIZE_BORDER, _T("wxID_ANY"));
-	SetClientSize(wxSize(394,330));
+	SetClientSize(wxSize(469,364));
 	wxFont thisFont(10,wxDEFAULT,wxFONTSTYLE_NORMAL,wxNORMAL,false,wxEmptyString,wxFONTENCODING_DEFAULT);
 	SetFont(thisFont);
 	mainSizer = new wxBoxSizer(wxVERTICAL);
-	nbAutoVersioning = new wxNotebook(this, ID_AV_NOTEBOOK, wxDefaultPosition, wxSize(396,279), 0, _T("ID_AV_NOTEBOOK"));
+	nbAutoVersioning = new wxNotebook(this, ID_AV_NOTEBOOK, wxDefaultPosition, wxSize(456,283), 0, _T("ID_AV_NOTEBOOK"));
 	nbAutoVersioning->SetMaxSize(wxSize(-1,-1));
 	nbAutoVersioning->SetFocus();
 	pnlVersionValues = new wxPanel(nbAutoVersioning, ID_VALUES_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_VALUES_PANEL"));
@@ -311,7 +311,7 @@ long avVersionEditorDlg::Major(long value){
     if(value != -1){
         m_major = value;
         wxString strValue;
-        strValue.Printf(_("%d"),value);
+        strValue.Printf(_T("%d"),value);
         txtMajorVersion->SetValue(strValue);
     }
 
@@ -322,7 +322,7 @@ long avVersionEditorDlg::Minor(long value){
     if(value != -1){
         m_minor = value;
         wxString strValue;
-        strValue.Printf(_("%d"),value);
+        strValue.Printf(_T("%d"),value);
         txtMinorVersion->SetValue(strValue);
     }
 
@@ -333,7 +333,7 @@ long avVersionEditorDlg::Build(long value){
     if(value != -1){
         m_build = value;
         wxString strValue;
-        strValue.Printf(_("%d"),value);
+        strValue.Printf(_T("%d"),value);
         txtBuildNumber->SetValue(strValue);
     }
 
@@ -344,7 +344,7 @@ long avVersionEditorDlg::Revision(long value){
     if(value != -1){
         m_revision = value;
         wxString strValue;
-        strValue.Printf(_("%d"),value);
+        strValue.Printf(_T("%d"),value);
         txtRevisionNumber->SetValue(strValue);
     }
 
@@ -355,7 +355,7 @@ long avVersionEditorDlg::Count(long value){
     if(value != -1){
         m_count = value;
         wxString strValue;
-        strValue.Printf(_("%d"),value);
+        strValue.Printf(_T("%d"),value);
         txtBuildCount->SetValue(strValue);
     }
 
@@ -479,7 +479,7 @@ long avVersionEditorDlg::MinorMaximun(long value){
     if(value != -1){
         m_minorMaximun = value;
         wxString strValue;
-        strValue.Printf(_("%d"),value);
+        strValue.Printf(_T("%d"),value);
         txtMinorMaximun->SetValue(strValue);
     }
 
@@ -490,7 +490,7 @@ long avVersionEditorDlg::BuildMaximun(long value){
     if(value != -1){
         m_buildMaximun = value;
         wxString strValue;
-        strValue.Printf(_("%d"),value);
+        strValue.Printf(_T("%d"),value);
         txtBuildNumberMaximun->SetValue(strValue);
     }
 
@@ -501,7 +501,7 @@ long avVersionEditorDlg::RevisionMaximun(long value){
     if(value != -1){
         m_revisionMaximun = value;
         wxString strValue;
-        strValue.Printf(_("%d"),value);
+        strValue.Printf(_T("%d"),value);
         txtRevisionMax->SetValue(strValue);
     }
 
@@ -512,7 +512,7 @@ long avVersionEditorDlg::RevisionRandomMaximun(long value){
     if(value != -1){
         m_revisionRandomMaximun = value;
         wxString strValue;
-        strValue.Printf(_("%d"),value);
+        strValue.Printf(_T("%d"),value);
         txtRevisionRandom->SetValue(strValue);
     }
 
@@ -523,7 +523,7 @@ long avVersionEditorDlg::BuildTimesToMinorIncrement(long value){
     if(value != -1){
         m_buildTimesToMinorIncrement = value;
         wxString strValue;
-        strValue.Printf(_("%d"),value);
+        strValue.Printf(_T("%d"),value);
         txtBuildTimes->SetValue(strValue);
     }
 
@@ -631,8 +631,8 @@ void avVersionEditorDlg::OnCmbStatusSelect(wxCommandEvent& event)
         cmbAbbreviation->SetSelection(status);
     }
     else{
-        cmbAbbreviation->SetValue(_(""));
-        cmbStatus->SetValue(_(""));
+        cmbAbbreviation->SetValue(_T(""));
+        cmbStatus->SetValue(_T(""));
     }
 }
 

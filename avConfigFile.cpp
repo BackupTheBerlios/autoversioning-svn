@@ -2,7 +2,7 @@
 #include "avConfigFile.h"
 
 avConfigFile::avConfigFile(const wxString& filename){
-    m_configFile = new wxFileConfig(wxT("AutoVersioning"), wxT("Code::Blocks"), filename);
+    m_configFile = new wxFileConfig(_T("AutoVersioning"), _T("Code::Blocks"), filename);
     m_isOpen = true;
 }
 
@@ -16,7 +16,7 @@ void avConfigFile::Open(const wxString& filename){
     if(m_isOpen == true)
         Close();
 
-    m_configFile = new wxFileConfig(wxT("AutoVersioning"), wxT("Code::Blocks"), filename);
+    m_configFile = new wxFileConfig(_T("AutoVersioning"), _T("Code::Blocks"), filename);
     m_isOpen = true;
 }
 
