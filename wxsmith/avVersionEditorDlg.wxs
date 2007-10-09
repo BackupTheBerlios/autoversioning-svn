@@ -9,6 +9,7 @@
 			<size>10</size>
 		</font>
 		<id_arg>0</id_arg>
+		<handler function="OnMouseEnter" entry="EVT_ENTER_WINDOW" />
 		<object class="wxBoxSizer" variable="mainSizer" member="yes">
 			<orient>wxVERTICAL</orient>
 			<object class="sizeritem">
@@ -228,7 +229,7 @@
 											<border>5</border>
 										</object>
 										<object class="sizeritem">
-											<object class="wxTextCtrl" name="ID_MINORMAXIMUN_TEXT" variable="txtMinorMaximun" member="yes">
+											<object class="wxTextCtrl" name="ID_MINORMAXIMUM_TEXT" variable="txtMinorMaximun" member="yes">
 												<value>10</value>
 												<tooltip>Resets the minor to&#x0A;zero when the specified&#x0A;value is reached.</tooltip>
 											</object>
@@ -540,6 +541,10 @@
 				<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 				<border>1</border>
 			</object>
+		</object>
+		<object class="wxTimer" name="ID_VALIDATE_TIMER" variable="tmrValidateInput" member="yes">
+			<interval>500</interval>
+			<handler function="OnTmrValidateInputTrigger" entry="EVT_TIMER" />
 		</object>
 	</object>
 </wxsmith>

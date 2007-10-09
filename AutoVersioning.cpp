@@ -64,6 +64,7 @@ BEGIN_EVENT_TABLE(AutoVersioning,wxEvtHandler)
     EVT_TIMER(-1, AutoVersioning::OnTimerVerify)
 
     EVT_UPDATE_UI(idMenuCommitChanges, AutoVersioning::OnUpdateUI)
+    EVT_UPDATE_UI(idMenuAutoVersioning, AutoVersioning::OnUpdateUI)
     EVT_MENU(idMenuAutoVersioning, AutoVersioning::OnMenuAutoVersioning)
     EVT_MENU(idMenuCommitChanges, AutoVersioning::OnMenuCommitChanges)
 END_EVENT_TABLE()
@@ -118,8 +119,8 @@ void AutoVersioning::BuildMenu(wxMenuBar* menuBar)
     {
         wxMenu* project = menuBar->GetMenu(idProject);
         project->AppendSeparator();
-        project->Append(idMenuAutoVersioning, _("Auto Versioning"), _("Manage your project version"));
-        project->Append(idMenuCommitChanges, _("Commit Changes"), _("Commit the changes made to the project to increment the version"));
+        project->Append(idMenuAutoVersioning, _("Autoversioning"), _("Manage your project version"));
+        project->Append(idMenuCommitChanges, _("Commit Changes"), _("Increments and update the version info"));
     }
 }
 //}
@@ -255,7 +256,7 @@ void AutoVersioning::OnMenuAutoVersioning(wxCommandEvent& event)
             }
             else
             {
-                if (wxMessageBox(_("Configure the project \"") + project->GetTitle() + _("\" for Auto Versioning?"),_("Auto Versioning"),wxYES_NO) == wxYES)
+                if (wxMessageBox(_("Configure the project \"") + project->GetTitle() + _("\" for Autoversioning?"),_("Autoversioning"),wxYES_NO) == wxYES)
                 {
 
                     CreateVersionFile();
@@ -310,7 +311,10 @@ void AutoVersioning::OnUpdateUI(wxUpdateUIEvent& event)
             m_versionConfigPath = basepath + _T("version.ini");
             m_versionHeaderPath = basepath + _T("version.h");
 
-            if (wxFileExists(m_versionConfigPath))
+            if(event.GetId() == idMenuAutoVersioning){
+                event.Enable(true);
+            }
+            else if (wxFileExists(m_versionConfigPath))
             {
                 m_versionConfig.Open(m_versionConfigPath);
                 long commit = m_versionConfig.ReadValue(COMMIT);
@@ -330,6 +334,9 @@ void AutoVersioning::OnUpdateUI(wxUpdateUIEvent& event)
             {
                 event.Enable(false);
             }
+        }
+        else{
+            event.Enable(false);
         }
     }
 }
@@ -501,7 +508,7 @@ void AutoVersioning::UpdateVersionHeader()
     {
         wxString revision,date;
         if (!QuerySvn(svnDirectory, revision, date))
-            wxMessageBox(_("Svn configuration files not found.\nVerify the Auto Versioning svn directory."),_("Error"),wxICON_ERROR);
+            wxMessageBox(_("Svn configuration files not found.\nVerify the Autoversioning svn directory."),_("Error"),wxICON_ERROR);
         headerOutput << _T("\t") << _T("\n");
         headerOutput << _T("\t") << _T("//SVN Version") << _T("\n");
         headerOutput << _T("\t") << _T("static char SVN_REVISION[] = ") << _T("\"") + revision + _T("\"")<< _T(";\n");

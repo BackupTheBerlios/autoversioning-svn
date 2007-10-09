@@ -1,7 +1,13 @@
-Here the Auto Versioning plugin 0.8.2
+Here the AutoVersioning plugin 0.9
 
 Changes:
-  - Cleaned some unnecesary translated strings. (Now it should work faster)
+  - Added a scheme validator to support the user while entering the values (error when dividing by zero on Revision random maximumn).
+  - Changed some strings from Auto Versioning to Autoversioning
+  - Now the project menus are disabled when no project is active.
+  - Edited some menu comments and make them shorter.
+
+On v0.8.2
+  - Cleaned some unnecesary translated strings. (Now it should work faster) (replaced _() by _T())
 
 On v0.8.1:
   - Minor change to settings panel to adjust the Header output radiobox for windows.

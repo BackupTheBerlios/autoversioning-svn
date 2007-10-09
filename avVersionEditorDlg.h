@@ -1,6 +1,6 @@
 //{Info
 /*
- ** Purpose:   Code::Blocks - Auto Versioning Plugin
+ ** Purpose:   Code::Blocks - Autoversioning Plugin
  ** Author:    JGM
  ** Created:   06/29/07 02:48:59 p.m.
  ** Copyright: (c) JGM
@@ -10,6 +10,8 @@
 
 #ifndef DLGVERSIONINTIALIZER_H
 #define DLGVERSIONINTIALIZER_H
+
+#include <typeinfo>
 
 //(*Headers(avVersionEditorDlg)
 #include <wx/button.h>
@@ -23,7 +25,10 @@
 #include <wx/statline.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
+#include <wx/timer.h>
 //*)
+
+#include <wx/event.h>
 
 class avVersionEditorDlg: public wxDialog
 {
@@ -75,7 +80,7 @@ class avVersionEditorDlg: public wxDialog
 		static const long ID_ABBREVIATION_COMBOBOX;
 		static const long ID_SCHEME_PANEL;
 		static const long ID_MINORMAXIMUN_LABEL;
-		static const long ID_MINORMAXIMUN_TEXT;
+		static const long ID_MINORMAXIMUM_TEXT;
 		static const long ID_BUILDNUMBERMAX_LABEL;
 		static const long ID_BUILDNUMBERMAX_TEXT;
 		static const long ID_REVISIONMAX_LABEL;
@@ -102,6 +107,7 @@ class avVersionEditorDlg: public wxDialog
 		static const long ID_FORMATS_STATICTEXT;
 		static const long ID_ACCEPT;
 		static const long ID_CANCEL;
+		static const long ID_VALIDATE_TIMER;
 		//*)
 
 	protected:
@@ -118,6 +124,10 @@ class avVersionEditorDlg: public wxDialog
 		void OnCmbAbbreviationSelect(wxCommandEvent& event);
 		void OnChkChangesClick(wxCommandEvent& event);
 		void OnnbAutoVersioningPageChanged(wxNotebookEvent& event);
+		void OnTxtRevisionRandomText(wxCommandEvent& event);
+		void OnTmrValidateInputTrigger(wxTimerEvent& event);
+		void OnTextChanged(wxCommandEvent& event);
+		void OnMouseEnter(wxMouseEvent& event);
 		//*)
 
 		//(*Declarations(avVersionEditorDlg)
@@ -190,6 +200,7 @@ class avVersionEditorDlg: public wxDialog
 		wxBoxSizer* buttonsSizer;
 		wxButton* btnAccept;
 		wxButton* btnCancel;
+		wxTimer tmrValidateInput;
 		//*)
 
     public:
@@ -218,6 +229,8 @@ class avVersionEditorDlg: public wxDialog
 
         long Changes(long value = 5);
         wxString ChangesTitle(wxString value = _T(""));
+
+        void ValidateInput();
 
 		DECLARE_EVENT_TABLE()
 };

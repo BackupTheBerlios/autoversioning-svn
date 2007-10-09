@@ -1,6 +1,6 @@
 //{Info
 /*
- ** Purpose:   Code::Blocks - Auto Versioning Plugin
+ ** Purpose:   Code::Blocks - AutoVersioning Plugin
  ** Author:    JGM
  ** Created:   06/27/07 11:19:56 a.m.
  ** Copyright: (c) JGM
