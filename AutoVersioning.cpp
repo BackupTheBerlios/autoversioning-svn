@@ -463,37 +463,37 @@ void AutoVersioning::UpdateVersionHeader()
     {
         wxDateTime actualDate = wxDateTime::Now();
         headerOutput << _T("\t") << _T("//Date Version Types") << _T("\n");
-        headerOutput << _T("\t") << _T("static char DATE[] = ") << actualDate.Format(_T("\"%d\"")) << _T(";\n");
-        headerOutput << _T("\t") << _T("static char MONTH[] = ") << actualDate.Format(_T("\"%m\"")) << _T(";\n");
-        headerOutput << _T("\t") << _T("static char YEAR[] = ") << actualDate.Format(_T("\"%Y\"")) << _T(";\n");
+        headerOutput << _T("\t") << _T("static const char DATE[] = ") << actualDate.Format(_T("\"%d\"")) << _T(";\n");
+        headerOutput << _T("\t") << _T("static const char MONTH[] = ") << actualDate.Format(_T("\"%m\"")) << _T(";\n");
+        headerOutput << _T("\t") << _T("static const char YEAR[] = ") << actualDate.Format(_T("\"%Y\"")) << _T(";\n");
         long ubuntuYearNumber = 0;
         actualDate.Format(_T("%y")).ToLong(&ubuntuYearNumber);
         wxString ubuntuYear;
         ubuntuYear.Printf(_T("%d"),ubuntuYearNumber);
-        headerOutput << _T("\t") << _T("static double UBUNTU_VERSION_STYLE = ") << ubuntuYear << actualDate.Format(_T(".%m")) << _T(";\n");
+        headerOutput << _T("\t") << _T("static const double UBUNTU_VERSION_STYLE = ") << ubuntuYear << actualDate.Format(_T(".%m")) << _T(";\n");
         headerOutput << _T("\t") << _T("\n");
     }
 
     headerOutput << _T("\t") << _T("//Software Status") << _T("\n");
-    headerOutput << _T("\t") << _T("static char STATUS[] = \"") << status << _T("\";\n");
-    headerOutput << _T("\t") << _T("static char STATUS_SHORT[] = \"") << statusAbbreviation << _T("\";\n");
+    headerOutput << _T("\t") << _T("static const char STATUS[] = \"") << status << _T("\";\n");
+    headerOutput << _T("\t") << _T("static const char STATUS_SHORT[] = \"") << statusAbbreviation << _T("\";\n");
     headerOutput << _T("\t") << _T("\n");
 
     wxString myPrintf;
     headerOutput << _T("\t") << _T("//Standard Version Type") << _T("\n");
     myPrintf.Printf(_T("%d"),major);
-    headerOutput << _T("\t") << _T("static long MAJOR = ") << myPrintf << _T(";\n");
+    headerOutput << _T("\t") << _T("static const long MAJOR = ") << myPrintf << _T(";\n");
     myPrintf.Printf(_T("%d"),minor);
-    headerOutput << _T("\t") << _T("static long MINOR = ") << myPrintf << _T(";\n");
+    headerOutput << _T("\t") << _T("static const long MINOR = ") << myPrintf << _T(";\n");
     myPrintf.Printf(_T("%d"),build);
-    headerOutput << _T("\t") << _T("static long BUILD = ") << myPrintf << _T(";\n");
+    headerOutput << _T("\t") << _T("static const long BUILD = ") << myPrintf << _T(";\n");
     myPrintf.Printf(_T("%d"),revision);
-    headerOutput << _T("\t") << _T("static long REVISION = ") << myPrintf << _T(";\n");
+    headerOutput << _T("\t") << _T("static const long REVISION = ") << myPrintf << _T(";\n");
     headerOutput << _T("\t") << _T("\n");
 
     headerOutput << _T("\t") << _T("//Miscellaneous Version Types") << _T("\n");
     myPrintf.Printf(_T("%d"),count);
-    headerOutput << _T("\t") << _T("static long BUILDS_COUNT = ") << myPrintf << _T(";\n");
+    headerOutput << _T("\t") << _T("static const long BUILDS_COUNT = ") << myPrintf << _T(";\n");
 
     myPrintf.Printf(_T("%d,%d,%d,%d"),major,minor,build,revision);
     headerOutput << _T("\t") << _T("#define RC_FILEVERSION ") << myPrintf << _T("\n");
@@ -502,7 +502,7 @@ void AutoVersioning::UpdateVersionHeader()
     headerOutput << _T("\t") << _T("#define RC_FILEVERSION_STRING ") << myPrintf << _T("\n");
 
     myPrintf.Printf(_T("\"%d.%d.%d.%d\""),major,minor,build,revision);
-    headerOutput << _T("\t") << _T("static char FULLVERSION_STRING[] = ") << myPrintf << _T(";\n");
+    headerOutput << _T("\t") << _T("static const char FULLVERSION_STRING[] = ") << myPrintf << _T(";\n");
 
     if (svn == 1)
     {
@@ -511,11 +511,11 @@ void AutoVersioning::UpdateVersionHeader()
             wxMessageBox(_("Svn configuration files not found.\nVerify the Autoversioning svn directory."),_("Error"),wxICON_ERROR);
         headerOutput << _T("\t") << _T("\n");
         headerOutput << _T("\t") << _T("//SVN Version") << _T("\n");
-        headerOutput << _T("\t") << _T("static char SVN_REVISION[] = ") << _T("\"") + revision + _T("\"")<< _T(";\n");
-        headerOutput << _T("\t") << _T("static char SVN_DATE[] = ") << _T("\"") + date + _T("\"")<< _T(";\n");
+        headerOutput << _T("\t") << _T("static const char SVN_REVISION[] = ") << _T("\"") + revision + _T("\"")<< _T(";\n");
+        headerOutput << _T("\t") << _T("static const char SVN_DATE[] = ") << _T("\"") + date + _T("\"")<< _T(";\n");
     }
 
-    headerOutput << _T("\t") << _T("\n");
+    headerOutput << _T("\t") << _T("\n\n");
 
     if(language == _T("C++")){
         headerOutput << _T("}") << _T("\n");
