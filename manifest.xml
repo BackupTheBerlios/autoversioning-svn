@@ -3,7 +3,7 @@
     <SdkVersion major="1" minor="10" release="0" />
     <Plugin name="AutoVersioning">
         <Value title="Autoversioning" />
-        <Value version="0.9" />
+        <Value version="0.9.1" />
         <Value description="Auto increments the version and build number of your application every time a change has been made and stores it in version.h with easy to use variable declarations. Also have a feature for committing changes a la SVN style, a version scheme editor and a change log generator.
 
 Example:
@@ -15,35 +15,36 @@ Example:
 Declarations available in the AutoVersion namespace on C++ and global on C:
 
   1) Date Version Types
-	  static char DATE[]
-	  static char MONTH[]
-	  static char YEAR[]
-	  static double UBUNTU_VERSION_STYLE
+	  static const char DATE[]
+	  static const char MONTH[]
+	  static const char YEAR[]
+	  static const double UBUNTU_VERSION_STYLE
 
   2) Software Status
-	  static char STATUS[]
-	  static char STATUS_SHORT[]
+	  static const char STATUS[]
+	  static const char STATUS_SHORT[]
 
   3) Standard Version Type
-	  static long MAJOR
-	  static long MINOR
-	  static long BUILD
-      static long REVISION
+	  static const long MAJOR
+	  static const long MINOR
+	  static const long BUILD
+      	  static const long REVISION
 
   4) Miscellaneous Version Types
-	  static long BUILDS_COUNT
+	  static const long BUILDS_COUNT
 	  #define RC_FILEVERSION
 	  #define RC_FILEVERSION_STRING
-	  static char FULLVERSION_STRING[]
+	  static const char FULLVERSION_STRING[]
 
   5) SVN Version
-	  static char SVN_REVISION[]
-	  static char SVN_DATE[]
+	  static const char SVN_REVISION[]
+	  static const char SVN_DATE[]
 " />
         <Value author="JGM" />
         <Value authorEmail="jgmdev@gmail.com" />
         <Value authorWebsite="" />
-        <Value thanksTo="Killerbot - Code Optimizations" />
+        <Value thanksTo="Killerbot - Code Optimizations
+Jeisson - Nice Const Tip to suppress warnings" />
         <Value license="GPL" />
     </Plugin>
 </CodeBlocks_plugin_manifest_file>
