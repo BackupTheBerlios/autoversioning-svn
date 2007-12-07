@@ -1,9 +1,20 @@
-Here the AutoVersioning plugin 0.9.1
+Here the AutoVersioning plugin 1.0
 
-Changes:
+Changes
+  - Now the plugin uses the project file to store settings instead of the ini file, thanks to killerbot.
+  - You can choose where to store the version.h header as change the filename.
+  - You can choose where to store the changeslog as change the filename.
+  - The settings tab option AutoIncrement has been changed to Do Autoincrement, because of some different behaviour.
+  - Also the Commit Changes menu was renamed to Increment Version.
+  - Now the version.h file is parsed to obtain the version values.
+  - You will have to increment version before closing the project if changes, since it doesn't store the modified flag as a configuration anymore.
+  - The build history is now part of the header file.
+  - Many other internal changes thanks to killerbot.
+
+on v0.9.1
   - Declared variables on the generated version.h const to suppress warnings.
 
-ov v0.9
+on v0.9
   - Added a scheme validator to support the user while entering the values (error when dividing by zero on Revision random maximumn).
   - Changed some strings from Auto Versioning to Autoversioning
   - Now the project menus are disabled when no project is active.
@@ -35,7 +46,7 @@ On v0.5:
   - Minor fixes.
 
 On v0.4.1:
-  - Fixed trash generated the first time configured with a project.  
+  - Fixed trash generated the first time configured with a project.
   - other minor fixes
 
 On v0.4

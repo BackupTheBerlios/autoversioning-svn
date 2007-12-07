@@ -1,28 +1,22 @@
 #include "avVersionEditorDlg.h"
 
 //(*InternalHeaders(avVersionEditorDlg)
-#include <wx/bitmap.h>
 #include <wx/font.h>
-#include <wx/fontenum.h>
-#include <wx/fontmap.h>
-#include <wx/image.h>
 #include <wx/intl.h>
-#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
+#include <globals.h>
 #include <wx/dirdlg.h>
+#include <wx/filedlg.h>
+#include <wx/filename.h>
 #include <wx/msgdlg.h>
-
-#include "avStrCon.h"
 
 wxTextCtrl* l_FocusedControl = 0;
 
 //{ID's
 
 //(*IdInit(avVersionEditorDlg)
-const long avVersionEditorDlg::ID_AV_NOTEBOOK = wxNewId();
-const long avVersionEditorDlg::ID_VALUES_PANEL = wxNewId();
 const long avVersionEditorDlg::ID_MAJOR_LABEL = wxNewId();
 const long avVersionEditorDlg::ID_MAJOR_TEXT = wxNewId();
 const long avVersionEditorDlg::ID_MINOR_LABEL = wxNewId();
@@ -34,13 +28,13 @@ const long avVersionEditorDlg::ID_REVISION_TEXT = wxNewId();
 const long avVersionEditorDlg::ID_STATICLINE2 = wxNewId();
 const long avVersionEditorDlg::ID_COUNT_LABEL = wxNewId();
 const long avVersionEditorDlg::ID_COUNT_TEXT = wxNewId();
-const long avVersionEditorDlg::ID_STATUS_PANEL = wxNewId();
+const long avVersionEditorDlg::ID_VALUES_PANEL = wxNewId();
 const long avVersionEditorDlg::ID_SATUS_LABEL = wxNewId();
 const long avVersionEditorDlg::ID_STATUS_COMBOBOX = wxNewId();
 const long avVersionEditorDlg::ID_STATICLINE4 = wxNewId();
 const long avVersionEditorDlg::ID_STATICTEXT1 = wxNewId();
 const long avVersionEditorDlg::ID_ABBREVIATION_COMBOBOX = wxNewId();
-const long avVersionEditorDlg::ID_SCHEME_PANEL = wxNewId();
+const long avVersionEditorDlg::ID_STATUS_PANEL = wxNewId();
 const long avVersionEditorDlg::ID_MINORMAXIMUN_LABEL = wxNewId();
 const long avVersionEditorDlg::ID_MINORMAXIMUM_TEXT = wxNewId();
 const long avVersionEditorDlg::ID_BUILDNUMBERMAX_LABEL = wxNewId();
@@ -51,22 +45,30 @@ const long avVersionEditorDlg::ID_REVISIONRANDOM_LABEL = wxNewId();
 const long avVersionEditorDlg::ID_REVISIONRANDOM_TEXT = wxNewId();
 const long avVersionEditorDlg::ID_BUILDTIMES_LABEL = wxNewId();
 const long avVersionEditorDlg::ID_BUILDTIMES_TEXT = wxNewId();
-const long avVersionEditorDlg::ID_SETTINGS_PANEL = wxNewId();
+const long avVersionEditorDlg::ID_SCHEME_PANEL = wxNewId();
 const long avVersionEditorDlg::ID_AUTO_CHECK = wxNewId();
 const long avVersionEditorDlg::ID_DATES_CHECK = wxNewId();
-const long avVersionEditorDlg::ID_STATICLINE3 = wxNewId();
 const long avVersionEditorDlg::ID_COMMIT_CHECK = wxNewId();
 const long avVersionEditorDlg::ID_ASKCOMMIT_CHECK = wxNewId();
+const long avVersionEditorDlg::ID_STATICLINE3 = wxNewId();
+const long avVersionEditorDlg::ID_HEADERPATH_LABEL = wxNewId();
+const long avVersionEditorDlg::ID_HEADERPATH_TEXTCTRL = wxNewId();
+const long avVersionEditorDlg::ID_HEADERPATH_BUTTON = wxNewId();
 const long avVersionEditorDlg::ID_HEADERLANGUAGE_RADIOBOX = wxNewId();
 const long avVersionEditorDlg::ID_STATICLINE1 = wxNewId();
 const long avVersionEditorDlg::ID_SVN_CHECK = wxNewId();
 const long avVersionEditorDlg::ID_SVNDIR_TEXT = wxNewId();
 const long avVersionEditorDlg::ID_SVNDIR_BUTTON = wxNewId();
-const long avVersionEditorDlg::ID_CHANGES_PANEL = wxNewId();
+const long avVersionEditorDlg::ID_SETTINGS_PANEL = wxNewId();
 const long avVersionEditorDlg::ID_GENERATECHANGES_CHECKBOX = wxNewId();
+const long avVersionEditorDlg::ID_CHANGESPATH_STATICTEXT = wxNewId();
+const long avVersionEditorDlg::ID_CHANGESLOGPATH_TEXTCTRL = wxNewId();
+const long avVersionEditorDlg::ID_CHANGESLOGPATH_BUTTON = wxNewId();
 const long avVersionEditorDlg::ID_FORMAT_STATICTEXT = wxNewId();
 const long avVersionEditorDlg::ID_CHANGESTITLE_TEXTCTRL = wxNewId();
 const long avVersionEditorDlg::ID_FORMATS_STATICTEXT = wxNewId();
+const long avVersionEditorDlg::ID_CHANGES_PANEL = wxNewId();
+const long avVersionEditorDlg::ID_AV_NOTEBOOK = wxNewId();
 const long avVersionEditorDlg::ID_ACCEPT = wxNewId();
 const long avVersionEditorDlg::ID_CANCEL = wxNewId();
 const long avVersionEditorDlg::ID_VALIDATE_TIMER = wxNewId();
@@ -85,7 +87,13 @@ END_EVENT_TABLE()
 avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
 {
     //(*Initialize(avVersionEditorDlg)
-    Create(parent, wxID_ANY, _("Autoversioning Editor"), wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxCAPTION|wxRESIZE_BORDER, _T("wxID_ANY"));
+    wxBoxSizer* BoxSizer15;
+    wxBoxSizer* BoxSizer10;
+    wxBoxSizer* BoxSizer13;
+    wxBoxSizer* BoxSizer11;
+    wxBoxSizer* BoxSizer14;
+    
+    Create(parent, wxID_ANY, _("Auto Versioning Editor"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxRESIZE_BORDER, _T("wxID_ANY"));
     SetClientSize(wxSize(469,364));
     wxFont thisFont(10,wxDEFAULT,wxFONTSTYLE_NORMAL,wxNORMAL,false,wxEmptyString,wxFONTENCODING_DEFAULT);
     SetFont(thisFont);
@@ -203,41 +211,56 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
     schemeSizer->SetSizeHints(pnlScheme);
     pnlSettings = new wxPanel(nbAutoVersioning, ID_SETTINGS_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_SETTINGS_PANEL"));
     settingsSizer = new wxBoxSizer(wxVERTICAL);
-    settingsSizer->Add(-1,-1,0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer11 = new wxBoxSizer(wxHORIZONTAL);
+    BoxSizer13 = new wxBoxSizer(wxVERTICAL);
     chkAutoIncrement = new wxCheckBox(pnlSettings, ID_AUTO_CHECK, _("Autoincrement Major and Minor"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_AUTO_CHECK"));
     chkAutoIncrement->SetValue(true);
     chkAutoIncrement->SetToolTip(_("Use the default scheme for \nautoincrementing the major \nand minor versions."));
-    settingsSizer->Add(chkAutoIncrement, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer13->Add(chkAutoIncrement, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     chkDates = new wxCheckBox(pnlSettings, ID_DATES_CHECK, _("Create date declarations"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_DATES_CHECK"));
     chkDates->SetValue(true);
     chkDates->SetToolTip(_("Create variable declarations\nfor date, month and year. And \nalso an ubuntu version style."));
-    settingsSizer->Add(chkDates, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer13->Add(chkDates, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer11->Add(BoxSizer13, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer14 = new wxBoxSizer(wxVERTICAL);
+    chkCommit = new wxCheckBox(pnlSettings, ID_COMMIT_CHECK, _("Do Autoincrement"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_COMMIT_CHECK"));
+    chkCommit->SetValue(false);
+    chkCommit->SetToolTip(_("If you check this the version\ninfo will increment when files have\nbeen modified every time before\ncompilation takes effect."));
+    BoxSizer14->Add(chkCommit, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    chkAskCommit = new wxCheckBox(pnlSettings, ID_ASKCOMMIT_CHECK, _("Ask to Increment"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_ASKCOMMIT_CHECK"));
+    chkAskCommit->SetValue(false);
+    chkAskCommit->Disable();
+    chkAskCommit->SetToolTip(_("Ask you to increment every time\na change has been made to the \nsource code, before the compilation\ntakes effect."));
+    BoxSizer14->Add(chkAskCommit, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer11->Add(BoxSizer14, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    settingsSizer->Add(BoxSizer11, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticLine3 = new wxStaticLine(pnlSettings, ID_STATICLINE3, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE3"));
     settingsSizer->Add(StaticLine3, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 1);
     BoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     BoxSizer7 = new wxBoxSizer(wxVERTICAL);
-    chkCommit = new wxCheckBox(pnlSettings, ID_COMMIT_CHECK, _("Commit changes"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_COMMIT_CHECK"));
-    chkCommit->SetValue(false);
-    chkCommit->SetToolTip(_("If you check this you have to\ncommit changes and then the\nversion would increment."));
-    BoxSizer7->Add(chkCommit, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    chkAskCommit = new wxCheckBox(pnlSettings, ID_ASKCOMMIT_CHECK, _("Ask to commit changes"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_ASKCOMMIT_CHECK"));
-    chkAskCommit->SetValue(false);
-    chkAskCommit->Disable();
-    chkAskCommit->SetToolTip(_("Ask you to commit every time\na change has been made to the \nsource code, before the compilation\ntakes effect."));
-    BoxSizer7->Add(chkAskCommit, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    lblHeaderPath = new wxStaticText(pnlSettings, ID_HEADERPATH_LABEL, _("Header Path:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_HEADERPATH_LABEL"));
+    BoxSizer7->Add(lblHeaderPath, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer15 = new wxBoxSizer(wxHORIZONTAL);
+    txtHeaderPath = new wxTextCtrl(pnlSettings, ID_HEADERPATH_TEXTCTRL, _("verison.h"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_HEADERPATH_TEXTCTRL"));
+    txtHeaderPath->SetToolTip(_("Header path"));
+    BoxSizer15->Add(txtHeaderPath, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    btnHeaderPath = new wxButton(pnlSettings, ID_HEADERPATH_BUTTON, _("..."), wxDefaultPosition, wxSize(23,26), 0, wxDefaultValidator, _T("ID_HEADERPATH_BUTTON"));
+    btnHeaderPath->SetToolTip(_("Select header path and filename"));
+    BoxSizer15->Add(btnHeaderPath, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
+    BoxSizer7->Add(BoxSizer15, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer5->Add(BoxSizer7, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
-    wxString wxRadioBoxChoices_rbHeaderLanguage[2] =
+    wxString __wxRadioBoxChoices_1[2] = 
     {
-        _("C"),
-        _("C++")
+    	_("C"),
+    	_("C++")
     };
-    rbHeaderLanguage = new wxRadioBox(pnlSettings, ID_HEADERLANGUAGE_RADIOBOX, _("Header language"), wxDefaultPosition, wxDefaultSize, 2, wxRadioBoxChoices_rbHeaderLanguage, 2, wxRA_HORIZONTAL, wxDefaultValidator, _T("ID_HEADERLANGUAGE_RADIOBOX"));
+    rbHeaderLanguage = new wxRadioBox(pnlSettings, ID_HEADERLANGUAGE_RADIOBOX, _("Header language"), wxDefaultPosition, wxDefaultSize, 2, __wxRadioBoxChoices_1, 2, wxRA_HORIZONTAL, wxDefaultValidator, _T("ID_HEADERLANGUAGE_RADIOBOX"));
     rbHeaderLanguage->SetSelection(1);
-    rbHeaderLanguage->SetToolTip(_("Sets the language output of version.h file"));
+    rbHeaderLanguage->SetToolTip(_("Sets the language output."));
     BoxSizer8->Add(rbHeaderLanguage, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    BoxSizer5->Add(BoxSizer8, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    settingsSizer->Add(BoxSizer5, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer5->Add(BoxSizer8, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    settingsSizer->Add(BoxSizer5, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticLine1 = new wxStaticLine(pnlSettings, ID_STATICLINE1, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
     settingsSizer->Add(StaticLine1, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     chkSvn = new wxCheckBox(pnlSettings, ID_SVN_CHECK, _("svn enabled"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_SVN_CHECK"));
@@ -262,7 +285,19 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
     chkChanges = new wxCheckBox(pnlChanges, ID_GENERATECHANGES_CHECKBOX, _("Generate changes log"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_GENERATECHANGES_CHECKBOX"));
     chkChanges->SetValue(false);
     chkChanges->SetToolTip(_("This will open a window\neverytime you commit or\nthe project version increments.\n\nThen you can enter the\nchanges made to the project."));
-    changesSizer->Add(chkChanges, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    changesSizer->Add(chkChanges, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    lblChangesPath = new wxStaticText(pnlChanges, ID_CHANGESPATH_STATICTEXT, _("File path;"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_CHANGESPATH_STATICTEXT"));
+    changesSizer->Add(lblChangesPath, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer10 = new wxBoxSizer(wxHORIZONTAL);
+    txtChangesLogPath = new wxTextCtrl(pnlChanges, ID_CHANGESLOGPATH_TEXTCTRL, _("ChangesLog.txt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHANGESLOGPATH_TEXTCTRL"));
+    txtChangesLogPath->Disable();
+    txtChangesLogPath->SetToolTip(_("ChangesLog Path"));
+    BoxSizer10->Add(txtChangesLogPath, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    btnChangesLogPath = new wxButton(pnlChanges, ID_CHANGESLOGPATH_BUTTON, _("..."), wxDefaultPosition, wxSize(23,26), 0, wxDefaultValidator, _T("ID_CHANGESLOGPATH_BUTTON"));
+    btnChangesLogPath->Disable();
+    btnChangesLogPath->SetToolTip(_("Select ChangesLog path and filename"));
+    BoxSizer10->Add(btnChangesLogPath, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
+    changesSizer->Add(BoxSizer10, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer4 = new wxBoxSizer(wxHORIZONTAL);
     lblChangesTitle = new wxStaticText(pnlChanges, ID_FORMAT_STATICTEXT, _("Title Format:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_FORMAT_STATICTEXT"));
     BoxSizer4->Add(lblChangesTitle, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
@@ -270,7 +305,7 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
     txtChangesTitle->Disable();
     BoxSizer4->Add(txtChangesTitle, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     changesSizer->Add(BoxSizer4, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    lblChangesFormats = new wxStaticText(pnlChanges, ID_FORMATS_STATICTEXT, _("Major: %M, Minor: %m, Build: %b, Revision: %r, SVN Revision: %s, Date: %d, Month: %o, Year: %y, Ubuntu Style Version: %u, Status: %T, Status Short: %t, Project title: %p"), wxDefaultPosition, wxSize(375,74), 0, _T("ID_FORMATS_STATICTEXT"));
+    lblChangesFormats = new wxStaticText(pnlChanges, ID_FORMATS_STATICTEXT, _("Major: %M, Minor: %m, Build: %b, Revision: %r, SVN Revision: %s, Date: %d, Month: %o, Year: %y, Ubuntu Style Version: %u, Status: %T, Status Short: %t, Project title: %p"), wxDefaultPosition, wxSize(413,80), 0, _T("ID_FORMATS_STATICTEXT"));
     changesSizer->Add(lblChangesFormats, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     pnlChanges->SetSizer(changesSizer);
     changesSizer->Fit(pnlChanges);
@@ -296,15 +331,18 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
     tmrValidateInput.Start(500, false);
     mainSizer->SetSizeHints(this);
     Center();
-    Connect(wxID_ANY,wxEVT_ENTER_WINDOW,(wxObjectEventFunction)&avVersionEditorDlg::OnMouseEnter);
+    
     Connect(ID_STATUS_COMBOBOX,wxEVT_COMMAND_COMBOBOX_SELECTED,(wxObjectEventFunction)&avVersionEditorDlg::OnCmbStatusSelect);
     Connect(ID_COMMIT_CHECK,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&avVersionEditorDlg::OnChkCommitClick);
+    Connect(ID_HEADERPATH_BUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&avVersionEditorDlg::OnHeaderPathClick);
     Connect(ID_SVN_CHECK,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&avVersionEditorDlg::OnSvnCheck);
     Connect(ID_SVNDIR_BUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&avVersionEditorDlg::OnSvnDirectoryClick);
     Connect(ID_GENERATECHANGES_CHECKBOX,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&avVersionEditorDlg::OnChkChangesClick);
+    Connect(ID_CHANGESLOGPATH_BUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&avVersionEditorDlg::OnChangesLogPathClick);
     Connect(ID_ACCEPT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&avVersionEditorDlg::OnAcceptClick);
     Connect(ID_CANCEL,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&avVersionEditorDlg::OnCancelClick);
     Connect(ID_VALIDATE_TIMER,wxEVT_TIMER,(wxObjectEventFunction)&avVersionEditorDlg::OnTmrValidateInputTrigger);
+    Connect(wxID_ANY,wxEVT_ENTER_WINDOW,(wxObjectEventFunction)&avVersionEditorDlg::OnMouseEnter);
     //*)
 
     tmrValidateInput.Stop();
@@ -319,306 +357,220 @@ avVersionEditorDlg::~avVersionEditorDlg()
 
 
 //{Version Values
-long avVersionEditorDlg::Major(long value)
+void avVersionEditorDlg::SetMajor(long value)
 {
-    if (value != -1)
-    {
-        m_major = value;
-        wxString strValue;
-        strValue.Printf(_T("%d"),value);
-        txtMajorVersion->SetValue(strValue);
-    }
-
-    return m_major;
+    m_major = value;
+    wxString strValue;
+    strValue.Printf(_T("%d"),value);
+    txtMajorVersion->SetValue(strValue);
 }
 
-long avVersionEditorDlg::Minor(long value)
+void avVersionEditorDlg::SetMinor(long value)
 {
-    if (value != -1)
-    {
-        m_minor = value;
-        wxString strValue;
-        strValue.Printf(_T("%d"),value);
-        txtMinorVersion->SetValue(strValue);
-    }
-
-    return m_minor;
+    m_minor = value;
+    wxString strValue;
+    strValue.Printf(_T("%d"),value);
+    txtMinorVersion->SetValue(strValue);
 }
 
-long avVersionEditorDlg::Build(long value)
+void avVersionEditorDlg::SetBuild(long value)
 {
-    if (value != -1)
-    {
-        m_build = value;
-        wxString strValue;
-        strValue.Printf(_T("%d"),value);
-        txtBuildNumber->SetValue(strValue);
-    }
-
-    return m_build;
+    m_build = value;
+    wxString strValue;
+    strValue.Printf(_T("%d"),value);
+    txtBuildNumber->SetValue(strValue);
 }
 
-long avVersionEditorDlg::Revision(long value)
+void avVersionEditorDlg::SetRevision(long value)
 {
-    if (value != -1)
-    {
-        m_revision = value;
-        wxString strValue;
-        strValue.Printf(_T("%d"),value);
-        txtRevisionNumber->SetValue(strValue);
-    }
-
-    return m_revision;
+    m_revision = value;
+    wxString strValue;
+    strValue.Printf(_T("%d"),value);
+    txtRevisionNumber->SetValue(strValue);
 }
 
-long avVersionEditorDlg::Count(long value)
+void avVersionEditorDlg::SetCount(long value)
 {
-    if (value != -1)
-    {
-        m_count = value;
-        wxString strValue;
-        strValue.Printf(_T("%d"),value);
-        txtBuildCount->SetValue(strValue);
-    }
-
-    return m_count;
+    m_count = value;
+    wxString strValue;
+    strValue.Printf(_T("%d"),value);
+    txtBuildCount->SetValue(strValue);
 }
 //}
 
 //{Settings
-long avVersionEditorDlg::Auto(long value)
+void avVersionEditorDlg::SetAuto(bool value)
 {
-    if (value < 1)
-    {
-        m_autoMajorMinor = value;
-        chkAutoIncrement->SetValue(false);
-    }
-    else if (value == 1)
-    {
-        m_autoMajorMinor = value;
-        chkAutoIncrement->SetValue(true);
-    }
-
-    return m_autoMajorMinor;
+	m_autoMajorMinor = value;
+	chkAutoIncrement->SetValue(value);
 }
 
-long avVersionEditorDlg::Dates(long value)
+void avVersionEditorDlg::SetDates(bool value)
 {
-    if (value < 1)
-    {
-        m_dates = value;
-        chkDates->SetValue(false);
-    }
-    else if (value == 1)
-    {
-        m_dates = value;
-        chkDates->SetValue(true);
-    }
-
-    return m_dates;
+	m_dates = value;
+	chkDates->SetValue(value);
 }
 
-long avVersionEditorDlg::Svn(long value)
+void avVersionEditorDlg::SetSvn(bool value)
 {
-    if (value < 1)
+	m_svn = value;
+	chkSvn->SetValue(value);
+    if(!value)
     {
-        m_svn = value;
-        chkSvn->SetValue(false);
         txtSvnDir->Disable();
         btnSvnDir->Disable();
     }
-    else if (value == 1)
+    else
     {
-        m_svn = value;
-        chkSvn->SetValue(true);
         txtSvnDir->Enable();
         btnSvnDir->Enable();
     }
-
-    return m_svn;
 }
 
-wxString avVersionEditorDlg::SvnDirectory(wxString value)
+void avVersionEditorDlg::SetSvnDirectory(const wxString& value)
 {
     if (!value.IsEmpty())
     {
         m_svnDirectory = value;
         txtSvnDir->SetValue(m_svnDirectory);
     }
-
-    return m_svnDirectory;
 }
 
-long avVersionEditorDlg::Commit(long value)
+void avVersionEditorDlg::SetCommit(bool value)
 {
-    if (value < 1)
+	m_commit = value;
+	chkCommit->SetValue(value);
+    if(!value)
     {
-        m_commit = value;
-        chkCommit->SetValue(false);
         chkAskCommit->Disable();
     }
-    else if (value == 1)
+    else
     {
-        m_commit = value;
-        chkCommit->SetValue(true);
         chkAskCommit->Enable();
     }
-
-    return m_commit;
 }
 
-long avVersionEditorDlg::CommitAsk(long value)
+void avVersionEditorDlg::SetCommitAsk(bool value)
 {
-    if (value < 1)
-    {
-        m_askCommit = value;
-        chkAskCommit->SetValue(false);
-    }
-    else if (value == 1)
-    {
-        m_askCommit = value;
-        chkAskCommit->SetValue(true);
-    }
-
-    return m_askCommit;
+	m_askCommit = value;
+	chkAskCommit->SetValue(value);
 }
 
-wxString avVersionEditorDlg::Language(wxString value)
+void avVersionEditorDlg::SetLanguage(const wxString& value)
 {
     if (!value.IsEmpty())
     {
         m_language = value;
         rbHeaderLanguage->SetStringSelection(value);
     }
+}
 
-    return m_language;
+void avVersionEditorDlg::SetHeaderPath(const wxString& value)
+{
+    m_headerPath = value;
+    txtHeaderPath->SetValue(value);
 }
 //}
 
 //{Software Status
-wxString avVersionEditorDlg::Status(wxString value)
+void avVersionEditorDlg::SetStatus(const wxString& value)
 {
     if (!value.IsEmpty())
     {
         m_status = value;
         cmbStatus->SetValue(value);
     }
-
-    return m_status;
 }
 
-wxString avVersionEditorDlg::StatusAbbreviation(wxString value)
+void avVersionEditorDlg::SetStatusAbbreviation(const wxString& value)
 {
     if (!value.IsEmpty())
     {
         m_statusAbbreviation = value;
         cmbAbbreviation->SetValue(value);
     }
-
-    return m_statusAbbreviation;
 }
 //}
 
 //{Scheme
-long avVersionEditorDlg::MinorMaximun(long value)
+void avVersionEditorDlg::SetMinorMaximum(long value)
 {
-    if (value != -1)
-    {
-        m_minorMaximun = value;
-        wxString strValue;
-        strValue.Printf(_T("%d"),value);
-        txtMinorMaximun->SetValue(strValue);
-    }
-
-    return m_minorMaximun;
+	m_minorMaximun = value;
+	wxString strValue;
+	strValue.Printf(_T("%d"),value);
+	txtMinorMaximun->SetValue(strValue);
 }
 
-long avVersionEditorDlg::BuildMaximun(long value)
+void avVersionEditorDlg::SetBuildMaximum(long value)
 {
-    if (value != -1)
-    {
-        m_buildMaximun = value;
-        wxString strValue;
-        strValue.Printf(_T("%d"),value);
-        txtBuildNumberMaximun->SetValue(strValue);
-    }
-
-    return m_buildMaximun;
+	m_buildMaximun = value;
+	wxString strValue;
+	strValue.Printf(_T("%d"),value);
+	txtBuildNumberMaximun->SetValue(strValue);
 }
 
-long avVersionEditorDlg::RevisionMaximun(long value)
+void avVersionEditorDlg::SetRevisionMaximum(long value)
 {
-    if (value != -1)
-    {
-        m_revisionMaximun = value;
-        wxString strValue;
-        strValue.Printf(_T("%d"),value);
-        txtRevisionMax->SetValue(strValue);
-    }
-
-    return m_revisionMaximun;
+	m_revisionMaximun = value;
+	wxString strValue;
+	strValue.Printf(_T("%d"),value);
+	txtRevisionMax->SetValue(strValue);
 }
 
-long avVersionEditorDlg::RevisionRandomMaximun(long value)
+void avVersionEditorDlg::SetRevisionRandomMaximum(long value)
 {
-    if (value != -1)
-    {
-        m_revisionRandomMaximun = value;
-        wxString strValue;
-        strValue.Printf(_T("%d"),value);
-        txtRevisionRandom->SetValue(strValue);
-    }
-
-    return m_revisionRandomMaximun;
+	m_revisionRandomMaximun = value;
+	wxString strValue;
+	strValue.Printf(_T("%d"),value);
+	txtRevisionRandom->SetValue(strValue);
 }
 
-long avVersionEditorDlg::BuildTimesToMinorIncrement(long value)
+void avVersionEditorDlg::SetBuildTimesToMinorIncrement(long value)
 {
-    if (value != -1)
-    {
-        m_buildTimesToMinorIncrement = value;
-        wxString strValue;
-        strValue.Printf(_T("%d"),value);
-        txtBuildTimes->SetValue(strValue);
-    }
-
-    return m_buildTimesToMinorIncrement;
+	m_buildTimesToMinorIncrement = value;
+	wxString strValue;
+	strValue.Printf(_T("%d"),value);
+	txtBuildTimes->SetValue(strValue);
 }
 //}
 
 //{Changes Log
-long avVersionEditorDlg::Changes(long value)
+void avVersionEditorDlg::SetChanges(bool value)
 {
-    if (value < 1)
+    m_changes = value;
+	chkChanges->SetValue(value);
+    if(!value)
     {
-        m_changes = 0;
-        chkChanges->SetValue(false);
         txtChangesTitle->Disable();
+        txtChangesLogPath->Disable();
+        btnChangesLogPath->Disable();
     }
-    else if (value == 1)
+    else
     {
-        m_changes = value;
-        chkChanges->SetValue(true);
         txtChangesTitle->Enable();
+        txtChangesLogPath->Enable();
+        btnChangesLogPath->Enable();
     }
-
-    return m_changes;
 }
 
-wxString avVersionEditorDlg::ChangesTitle(wxString value)
+void avVersionEditorDlg::SetChangesLogPath(const wxString& value)
+{
+    m_changesLogPath = value;
+    txtChangesLogPath->SetValue(value);
+}
+
+void avVersionEditorDlg::SetChangesTitle(const wxString& value)
 {
     if (!value.IsEmpty())
     {
         m_changesTitle = value;
         txtChangesTitle->SetValue(value);
     }
-
-    return m_changesTitle;
 }
 //}
 
 //{Events
-void avVersionEditorDlg::OnAcceptClick(wxCommandEvent& event)
+void avVersionEditorDlg::OnAcceptClick(wxCommandEvent&)
 {
     tmrValidateInput.Stop();
     ValidateInput();
@@ -629,13 +581,14 @@ void avVersionEditorDlg::OnAcceptClick(wxCommandEvent& event)
     txtRevisionNumber->GetValue().ToLong(&m_revision);
     txtBuildCount->GetValue().ToLong(&m_count);
 
-    m_autoMajorMinor = chkAutoIncrement->IsChecked()?1:0;
-    m_dates = chkDates->IsChecked()?1:0;
-    m_svn = chkSvn->IsChecked()?1:0;
+    m_autoMajorMinor = chkAutoIncrement->IsChecked();
+    m_dates = chkDates->IsChecked();
+    m_svn = chkSvn->IsChecked();
     m_svnDirectory = txtSvnDir->GetValue();
-    m_commit = chkCommit->IsChecked()?1:0;
-    m_askCommit = chkAskCommit->IsChecked()?1:0;
+    m_commit = chkCommit->IsChecked();
+    m_askCommit = chkAskCommit->IsChecked();
     m_language = rbHeaderLanguage->GetStringSelection();
+    m_headerPath = txtHeaderPath->GetValue();
 
     m_status = cmbStatus->GetValue();
     m_statusAbbreviation = cmbAbbreviation->GetValue();
@@ -646,19 +599,20 @@ void avVersionEditorDlg::OnAcceptClick(wxCommandEvent& event)
     txtRevisionRandom->GetValue().ToLong(&m_revisionRandomMaximun);
     txtBuildTimes->GetValue().ToLong(&m_buildTimesToMinorIncrement);
 
-    m_changes = chkChanges->IsChecked()?1:0;
+    m_changes = chkChanges->IsChecked();
     m_changesTitle = txtChangesTitle->GetValue();
+    m_changesLogPath = txtChangesLogPath->GetValue();
 
     EndModal(0);
 }
 
-void avVersionEditorDlg::OnCancelClick(wxCommandEvent& event)
+void avVersionEditorDlg::OnCancelClick(wxCommandEvent&)
 {
     tmrValidateInput.Stop();
     EndModal(0);
 }
 
-void avVersionEditorDlg::OnSvnCheck(wxCommandEvent& event)
+void avVersionEditorDlg::OnSvnCheck(wxCommandEvent&)
 {
     if (chkSvn->IsChecked())
     {
@@ -673,9 +627,9 @@ void avVersionEditorDlg::OnSvnCheck(wxCommandEvent& event)
     }
 }
 
-void avVersionEditorDlg::OnSvnDirectoryClick(wxCommandEvent& event)
+void avVersionEditorDlg::OnSvnDirectoryClick(wxCommandEvent&)
 {
-    wxString dir = wxDirSelector(wxDirSelectorPromptStr,m_svnDirectory,0,wxDefaultPosition,this);
+    wxString dir = wxDirSelector(wxDirSelectorPromptStr, m_svnDirectory, 0, wxDefaultPosition, this);
     if (!dir.IsEmpty())
     {
         txtSvnDir->SetValue(dir);
@@ -683,15 +637,19 @@ void avVersionEditorDlg::OnSvnDirectoryClick(wxCommandEvent& event)
     }
 }
 
-void avVersionEditorDlg::OnChkCommitClick(wxCommandEvent& event)
+void avVersionEditorDlg::OnChkCommitClick(wxCommandEvent&)
 {
     if (chkCommit->IsChecked())
+    {
         chkAskCommit->Enable();
+    }
     else
+    {
         chkAskCommit->Disable();
+    }
 }
 
-void avVersionEditorDlg::OnCmbStatusSelect(wxCommandEvent& event)
+void avVersionEditorDlg::OnCmbStatusSelect(wxCommandEvent&)
 {
     int status = cmbStatus->GetCurrentSelection();
     if (status != 4)
@@ -705,23 +663,29 @@ void avVersionEditorDlg::OnCmbStatusSelect(wxCommandEvent& event)
     }
 }
 
-void avVersionEditorDlg::OnChkChangesClick(wxCommandEvent& event)
+void avVersionEditorDlg::OnChkChangesClick(wxCommandEvent&)
 {
     if (chkChanges->IsChecked())
     {
         txtChangesTitle->Enable();
+        txtChangesLogPath->Enable();
+        btnChangesLogPath->Enable();
     }
     else
     {
         txtChangesTitle->Disable();
+        txtChangesLogPath->Disable();
+        btnChangesLogPath->Disable();
     }
 }
 
-void avVersionEditorDlg::ValidateInput(){
+void avVersionEditorDlg::ValidateInput()
+{
     wxString type = _T("");
 
-    if(this->FindFocus()){
-        type = s2ws(typeid(*(this->FindFocus())).name());
+    if(this->FindFocus())
+    {
+        type = cbC2U(typeid(*(this->FindFocus())).name());
     }
 
     if (type.Find(_T("wxTextCtrl")) != wxNOT_FOUND)
@@ -738,27 +702,33 @@ void avVersionEditorDlg::ValidateInput(){
                 ifBlank = _T("10");
                 ifZero = _T("1");
             }
-            else if(l_FocusedControl->GetName() == _T("ID_BUILDNUMBERMAX_TEXT")){
+            else if(l_FocusedControl->GetName() == _T("ID_BUILDNUMBERMAX_TEXT"))
+            {
                 ifBlank = _T("0");
                 ifZero = _T("0");
             }
-            else if(l_FocusedControl->GetName() == _T("ID_REVISIONMAX_TEXT")){
+            else if(l_FocusedControl->GetName() == _T("ID_REVISIONMAX_TEXT"))
+            {
                 ifBlank = _T("0");
                 ifZero = _T("0");
             }
-            else if(l_FocusedControl->GetName() == _T("ID_BUILDTIMES_TEXT")){
+            else if(l_FocusedControl->GetName() == _T("ID_BUILDTIMES_TEXT"))
+            {
                 ifBlank = _T("100");
                 ifZero = _T("1");
             }
-            else if(l_FocusedControl->GetName() == _T("ID_REVISIONRANDOM_TEXT")){
+            else if(l_FocusedControl->GetName() == _T("ID_REVISIONRANDOM_TEXT"))
+            {
                 ifBlank = _T("10");
                 ifZero = _T("1");
             }
 
-            if(l_FocusedControl->GetValue() == _T("0")){
+            if(l_FocusedControl->GetValue() == _T("0"))
+            {
                 l_FocusedControl->SetValue(ifZero);
             }
-            else if(l_FocusedControl->GetValue().Trim() == _T("")){
+            else if(l_FocusedControl->GetValue().Trim() == _T(""))
+            {
                 l_FocusedControl->SetValue(ifBlank);
             }
 
@@ -787,8 +757,12 @@ void avVersionEditorDlg::ValidateInput(){
         }
 
     }
-    else{
-        goto ForceValidation;
+    else
+    {
+        goto ForceValidation; // KILLERBOT : can we do without ugly goto : normal C++ rule : sure we can --> investigate and solve
+        // weird / the goto target is the first part of the if clause of the else part, so that means that in both situations (if/else)
+        // the smae thing should happen ==> either this is an error , or we can do without the if test and as such without the goto
+        //  bye bye goto :-) :-) :-)
     }
 }
 
@@ -800,5 +774,37 @@ void avVersionEditorDlg::OnTmrValidateInputTrigger(wxTimerEvent& event)
 void avVersionEditorDlg::OnMouseEnter(wxMouseEvent& event)
 {
     tmrValidateInput.Start(250, false);
+}
+
+void avVersionEditorDlg::OnHeaderPathClick(wxCommandEvent& event)
+{
+    wxString path, filename, extension;
+    wxFileName::SplitPath(m_headerPath, &path, &filename, &extension);
+
+    wxString fullpath;
+    fullpath = wxFileSelector(_("Select the header path and filename:"), path, filename, extension, _T("C/C++ Header (*.h)|*.h|All Files (*.*)|*.*"));
+
+    if(!fullpath.IsEmpty()){
+        wxFileName relativeFile(fullpath);
+        relativeFile.MakeRelativeTo();
+
+        txtHeaderPath->SetValue(relativeFile.GetFullPath());
+    }
+}
+
+void avVersionEditorDlg::OnChangesLogPathClick(wxCommandEvent& event)
+{
+    wxString path, filename, extension;
+    wxFileName::SplitPath(m_changesLogPath, &path, &filename, &extension);
+
+    wxString fullpath;
+    fullpath = wxFileSelector(_("Select the changeslog path and filename:"), path, filename, extension, _T("Text File (*.txt)|*.txt"));
+
+    if(!fullpath.IsEmpty()){
+        wxFileName relativeFile(fullpath);
+        relativeFile.MakeRelativeTo();
+
+        txtChangesLogPath->SetValue(relativeFile.GetFullPath());
+    }
 }
 //}

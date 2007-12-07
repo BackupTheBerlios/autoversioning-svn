@@ -14,7 +14,6 @@
 				<Compiler>
 					<Add option="`pkg-config --cflags codeblocks`" />
 					<Add option="`wx-config --cflags`" />
-					<Add directory="$(#CB)" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -34,14 +33,14 @@
 		<Unit filename="AutoVersioning.h" />
 		<Unit filename="avChangesDlg.cpp" />
 		<Unit filename="avChangesDlg.h" />
-		<Unit filename="avConfigFile.cpp" />
-		<Unit filename="avConfigFile.h" />
-		<Unit filename="avStrCon.cpp" />
-		<Unit filename="avStrCon.h" />
+		<Unit filename="avConfig.h" />
+		<Unit filename="avHeader.cpp" />
+		<Unit filename="avHeader.h" />
 		<Unit filename="avSvnRevision.cpp" />
 		<Unit filename="avSvnRevision.h" />
 		<Unit filename="avVersionEditorDlg.cpp" />
 		<Unit filename="avVersionEditorDlg.h" />
+		<Unit filename="changes.txt" />
 		<Unit filename="license.txt" />
 		<Unit filename="manifest.xml" />
 		<Extensions>
