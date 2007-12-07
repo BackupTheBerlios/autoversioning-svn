@@ -1,0 +1,1 @@
+- detect if a project is loaded at first install of the plugin.

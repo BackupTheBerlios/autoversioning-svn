@@ -3,12 +3,12 @@
 	<object class="wxDialog" name="avVersionEditorDlg">
 		<title>Auto Versioning Editor</title>
 		<centered>1</centered>
-		<style>wxSTAY_ON_TOP|wxCAPTION|wxRESIZE_BORDER</style>
 		<size>469,364</size>
 		<font>
 			<size>10</size>
 		</font>
 		<id_arg>0</id_arg>
+		<style>wxCAPTION|wxRESIZE_BORDER</style>
 		<handler function="OnMouseEnter" entry="EVT_ENTER_WINDOW" />
 		<object class="wxBoxSizer" variable="mainSizer" member="yes">
 			<orient>wxVERTICAL</orient>
@@ -325,27 +325,63 @@
 						<object class="wxPanel" name="ID_SETTINGS_PANEL" variable="pnlSettings" member="yes">
 							<object class="wxBoxSizer" variable="settingsSizer" member="yes">
 								<orient>wxVERTICAL</orient>
-								<object class="spacer">
-									<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
-									<border>5</border>
-								</object>
 								<object class="sizeritem">
-									<object class="wxCheckBox" name="ID_AUTO_CHECK" variable="chkAutoIncrement" member="yes">
-										<label>Autoincrement Major and Minor</label>
-										<checked>1</checked>
-										<tooltip>Use the default scheme for &#x0A;autoincrementing the major &#x0A;and minor versions.</tooltip>
+									<object class="wxBoxSizer" variable="BoxSizer11" member="no">
+										<object class="sizeritem">
+											<object class="wxBoxSizer" variable="BoxSizer13" member="no">
+												<orient>wxVERTICAL</orient>
+												<object class="sizeritem">
+													<object class="wxCheckBox" name="ID_AUTO_CHECK" variable="chkAutoIncrement" member="yes">
+														<label>Autoincrement Major and Minor</label>
+														<checked>1</checked>
+														<tooltip>Use the default scheme for &#x0A;autoincrementing the major &#x0A;and minor versions.</tooltip>
+													</object>
+													<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+													<border>5</border>
+												</object>
+												<object class="sizeritem">
+													<object class="wxCheckBox" name="ID_DATES_CHECK" variable="chkDates" member="yes">
+														<label>Create date declarations</label>
+														<checked>1</checked>
+														<tooltip>Create variable declarations&#x0A;for date, month and year. And &#x0A;also an ubuntu version style.</tooltip>
+													</object>
+													<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+													<border>5</border>
+												</object>
+											</object>
+											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+											<border>5</border>
+											<option>1</option>
+										</object>
+										<object class="sizeritem">
+											<object class="wxBoxSizer" variable="BoxSizer14" member="no">
+												<orient>wxVERTICAL</orient>
+												<object class="sizeritem">
+													<object class="wxCheckBox" name="ID_COMMIT_CHECK" variable="chkCommit" member="yes">
+														<label>Do Autoincrement</label>
+														<tooltip>If you check this the version&#x0A;info will increment when files have&#x0A;been modified every time before&#x0A;compilation takes effect.</tooltip>
+														<handler function="OnChkCommitClick" entry="EVT_CHECKBOX" />
+													</object>
+													<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+													<border>5</border>
+												</object>
+												<object class="sizeritem">
+													<object class="wxCheckBox" name="ID_ASKCOMMIT_CHECK" variable="chkAskCommit" member="yes">
+														<label>Ask to Increment</label>
+														<enabled>0</enabled>
+														<tooltip>Ask you to increment every time&#x0A;a change has been made to the &#x0A;source code, before the compilation&#x0A;takes effect.</tooltip>
+													</object>
+													<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+													<border>5</border>
+												</object>
+											</object>
+											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+											<border>5</border>
+										</object>
 									</object>
 									<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 									<border>5</border>
-								</object>
-								<object class="sizeritem">
-									<object class="wxCheckBox" name="ID_DATES_CHECK" variable="chkDates" member="yes">
-										<label>Create date declarations</label>
-										<checked>1</checked>
-										<tooltip>Create variable declarations&#x0A;for date, month and year. And &#x0A;also an ubuntu version style.</tooltip>
-									</object>
-									<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
-									<border>5</border>
+									<option>1</option>
 								</object>
 								<object class="sizeritem">
 									<object class="wxStaticLine" name="ID_STATICLINE3" variable="StaticLine3" member="yes">
@@ -360,22 +396,36 @@
 											<object class="wxBoxSizer" variable="BoxSizer7" member="yes">
 												<orient>wxVERTICAL</orient>
 												<object class="sizeritem">
-													<object class="wxCheckBox" name="ID_COMMIT_CHECK" variable="chkCommit" member="yes">
-														<label>Commit changes</label>
-														<tooltip>If you check this you have to&#x0A;commit changes and then the&#x0A;version would increment.</tooltip>
-														<handler function="OnChkCommitClick" entry="EVT_CHECKBOX" />
+													<object class="wxStaticText" name="ID_HEADERPATH_LABEL" variable="lblHeaderPath" member="yes">
+														<label>Header Path:</label>
 													</object>
 													<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 													<border>5</border>
 												</object>
 												<object class="sizeritem">
-													<object class="wxCheckBox" name="ID_ASKCOMMIT_CHECK" variable="chkAskCommit" member="yes">
-														<label>Ask to commit changes</label>
-														<enabled>0</enabled>
-														<tooltip>Ask you to commit every time&#x0A;a change has been made to the &#x0A;source code, before the compilation&#x0A;takes effect.</tooltip>
+													<object class="wxBoxSizer" variable="BoxSizer15" member="no">
+														<object class="sizeritem">
+															<object class="wxTextCtrl" name="ID_HEADERPATH_TEXTCTRL" variable="txtHeaderPath" member="yes">
+																<value>verison.h</value>
+																<tooltip>Header path</tooltip>
+															</object>
+															<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+															<border>5</border>
+															<option>1</option>
+														</object>
+														<object class="sizeritem">
+															<object class="wxButton" name="ID_HEADERPATH_BUTTON" variable="btnHeaderPath" member="yes">
+																<label>...</label>
+																<size>23,26</size>
+																<tooltip>Select header path and filename</tooltip>
+																<handler function="OnHeaderPathClick" entry="EVT_BUTTON" />
+															</object>
+															<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+														</object>
 													</object>
 													<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 													<border>5</border>
+													<option>1</option>
 												</object>
 											</object>
 											<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -393,20 +443,19 @@
 														</content>
 														<default>1</default>
 														<dimension>2</dimension>
+														<tooltip>Sets the language output.</tooltip>
 														<style>wxRA_HORIZONTAL</style>
-														<tooltip>Sets the language output of version.h file</tooltip>
 													</object>
 													<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 													<border>5</border>
 													<option>1</option>
 												</object>
 											</object>
-											<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 											<border>5</border>
-											<option>1</option>
 										</object>
 									</object>
-									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+									<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 									<border>5</border>
 								</object>
 								<object class="sizeritem">
@@ -469,7 +518,39 @@
 									</object>
 									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 									<border>5</border>
-									<option>1</option>
+								</object>
+								<object class="sizeritem">
+									<object class="wxStaticText" name="ID_CHANGESPATH_STATICTEXT" variable="lblChangesPath" member="yes">
+										<label>File path;</label>
+									</object>
+									<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+									<border>5</border>
+								</object>
+								<object class="sizeritem">
+									<object class="wxBoxSizer" variable="BoxSizer10" member="no">
+										<object class="sizeritem">
+											<object class="wxTextCtrl" name="ID_CHANGESLOGPATH_TEXTCTRL" variable="txtChangesLogPath" member="yes">
+												<value>ChangesLog.txt</value>
+												<enabled>0</enabled>
+												<tooltip>ChangesLog Path</tooltip>
+											</object>
+											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+											<border>5</border>
+											<option>1</option>
+										</object>
+										<object class="sizeritem">
+											<object class="wxButton" name="ID_CHANGESLOGPATH_BUTTON" variable="btnChangesLogPath" member="yes">
+												<label>...</label>
+												<size>23,26</size>
+												<enabled>0</enabled>
+												<tooltip>Select ChangesLog path and filename</tooltip>
+												<handler function="OnChangesLogPathClick" entry="EVT_BUTTON" />
+											</object>
+											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+										</object>
+									</object>
+									<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+									<border>5</border>
 								</object>
 								<object class="sizeritem">
 									<object class="wxBoxSizer" variable="BoxSizer4" member="yes">
@@ -496,7 +577,7 @@
 								<object class="sizeritem">
 									<object class="wxStaticText" name="ID_FORMATS_STATICTEXT" variable="lblChangesFormats" member="yes">
 										<label>Major: %M, Minor: %m, Build: %b, Revision: %r, SVN Revision: %s, Date: %d, Month: %o, Year: %y, Ubuntu Style Version: %u, Status: %T, Status Short: %t, Project title: %p</label>
-										<size>375,74</size>
+										<size>413,80</size>
 									</object>
 									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 									<border>5</border>
