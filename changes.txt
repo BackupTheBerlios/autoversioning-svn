@@ -1,6 +1,11 @@
-Here the AutoVersioning plugin 1.0
+AutoVersioning plugin 1.1
 
 Changes
+  - Now the changes editor has a data grid for entering the changes with type and description
+  - The changes are stored on changes.tmp for later use, enables the user to write the changes when he wants
+  - Other minor things
+
+on v1.0
   - Now the plugin uses the project file to store settings instead of the ini file, thanks to killerbot.
   - You can choose where to store the version.h header as change the filename.
   - You can choose where to store the changeslog as change the filename.
