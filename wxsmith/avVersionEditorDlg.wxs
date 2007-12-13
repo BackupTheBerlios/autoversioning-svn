@@ -223,7 +223,7 @@
 									<object class="wxBoxSizer" variable="minorMaxSizer" member="yes">
 										<object class="sizeritem">
 											<object class="wxStaticText" name="ID_MINORMAXIMUN_LABEL" variable="lblMinorMaximum" member="yes">
-												<label>Minor maximun:</label>
+												<label>Minor maximum:</label>
 											</object>
 											<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 											<border>5</border>
@@ -244,7 +244,7 @@
 									<object class="wxBoxSizer" variable="buildNumberMaxSizer" member="yes">
 										<object class="sizeritem">
 											<object class="wxStaticText" name="ID_BUILDNUMBERMAX_LABEL" variable="lblBuildNumberMaximun" member="yes">
-												<label>Build Number maximun:</label>
+												<label>Build Number maximum:</label>
 											</object>
 											<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 											<border>5</border>
@@ -265,7 +265,7 @@
 									<object class="wxBoxSizer" variable="BoxSizer1" member="yes">
 										<object class="sizeritem">
 											<object class="wxStaticText" name="ID_REVISIONMAX_LABEL" variable="lblRevisionMax" member="yes">
-												<label>Revision maximun:</label>
+												<label>Revision maximum:</label>
 											</object>
 											<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 											<border>5</border>
@@ -286,7 +286,7 @@
 									<object class="wxBoxSizer" variable="BoxSizer2" member="yes">
 										<object class="sizeritem">
 											<object class="wxStaticText" name="ID_REVISIONRANDOM_LABEL" variable="lblRevisionRandom" member="yes">
-												<label>Revision random maximun:</label>
+												<label>Revision random maximum:</label>
 											</object>
 											<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 											<border>5</border>

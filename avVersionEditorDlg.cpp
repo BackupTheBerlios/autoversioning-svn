@@ -93,7 +93,7 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
     wxBoxSizer* BoxSizer13;
     wxBoxSizer* BoxSizer11;
     wxBoxSizer* BoxSizer14;
-
+    
     Create(parent, wxID_ANY, _("Auto Versioning Editor"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxRESIZE_BORDER, _T("wxID_ANY"));
     SetClientSize(wxSize(469,364));
     wxFont thisFont(10,wxDEFAULT,wxFONTSTYLE_NORMAL,wxNORMAL,false,wxEmptyString,wxFONTENCODING_DEFAULT);
@@ -175,28 +175,28 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
     pnlScheme = new wxPanel(nbAutoVersioning, ID_SCHEME_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_SCHEME_PANEL"));
     schemeSizer = new wxBoxSizer(wxVERTICAL);
     minorMaxSizer = new wxBoxSizer(wxHORIZONTAL);
-    lblMinorMaximum = new wxStaticText(pnlScheme, ID_MINORMAXIMUN_LABEL, _("Minor maximun:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_MINORMAXIMUN_LABEL"));
+    lblMinorMaximum = new wxStaticText(pnlScheme, ID_MINORMAXIMUN_LABEL, _("Minor maximum:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_MINORMAXIMUN_LABEL"));
     minorMaxSizer->Add(lblMinorMaximum, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     txtMinorMaximun = new wxTextCtrl(pnlScheme, ID_MINORMAXIMUM_TEXT, _("10"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_MINORMAXIMUM_TEXT"));
     txtMinorMaximun->SetToolTip(_("Resets the minor to\nzero when the specified\nvalue is reached."));
     minorMaxSizer->Add(txtMinorMaximun, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     schemeSizer->Add(minorMaxSizer, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
     buildNumberMaxSizer = new wxBoxSizer(wxHORIZONTAL);
-    lblBuildNumberMaximun = new wxStaticText(pnlScheme, ID_BUILDNUMBERMAX_LABEL, _("Build Number maximun:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_BUILDNUMBERMAX_LABEL"));
+    lblBuildNumberMaximun = new wxStaticText(pnlScheme, ID_BUILDNUMBERMAX_LABEL, _("Build Number maximum:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_BUILDNUMBERMAX_LABEL"));
     buildNumberMaxSizer->Add(lblBuildNumberMaximun, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     txtBuildNumberMaximun = new wxTextCtrl(pnlScheme, ID_BUILDNUMBERMAX_TEXT, _("0"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUILDNUMBERMAX_TEXT"));
     txtBuildNumberMaximun->SetToolTip(_("Reset the build number\nto zero when the specified\nvalue is reached.\n\n0 equals to unlimited."));
     buildNumberMaxSizer->Add(txtBuildNumberMaximun, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     schemeSizer->Add(buildNumberMaxSizer, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
     BoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    lblRevisionMax = new wxStaticText(pnlScheme, ID_REVISIONMAX_LABEL, _("Revision maximun:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_REVISIONMAX_LABEL"));
+    lblRevisionMax = new wxStaticText(pnlScheme, ID_REVISIONMAX_LABEL, _("Revision maximum:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_REVISIONMAX_LABEL"));
     BoxSizer1->Add(lblRevisionMax, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     txtRevisionMax = new wxTextCtrl(pnlScheme, ID_REVISIONMAX_TEXT, _("0"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_REVISIONMAX_TEXT"));
     txtRevisionMax->SetToolTip(_("Reset the revision to zero\nwhen the specified value \nis reached.\n\n0 equals to unlimited."));
     BoxSizer1->Add(txtRevisionMax, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     schemeSizer->Add(BoxSizer1, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
     BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
-    lblRevisionRandom = new wxStaticText(pnlScheme, ID_REVISIONRANDOM_LABEL, _("Revision random maximun:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_REVISIONRANDOM_LABEL"));
+    lblRevisionRandom = new wxStaticText(pnlScheme, ID_REVISIONRANDOM_LABEL, _("Revision random maximum:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_REVISIONRANDOM_LABEL"));
     BoxSizer2->Add(lblRevisionRandom, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     txtRevisionRandom = new wxTextCtrl(pnlScheme, ID_REVISIONRANDOM_TEXT, _("10"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_REVISIONRANDOM_TEXT"));
     txtRevisionRandom->SetToolTip(_("Maximun number value\nused for the random\nincrementation of the\nrevision."));
@@ -251,7 +251,7 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
     BoxSizer7->Add(BoxSizer15, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer5->Add(BoxSizer7, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
-    wxString __wxRadioBoxChoices_1[2] =
+    wxString __wxRadioBoxChoices_1[2] = 
     {
     	_("C"),
     	_("C++")
@@ -331,7 +331,7 @@ avVersionEditorDlg::avVersionEditorDlg(wxWindow* parent,wxWindowID id)
     tmrValidateInput.Start(500, false);
     mainSizer->SetSizeHints(this);
     Center();
-
+    
     Connect(ID_STATUS_COMBOBOX,wxEVT_COMMAND_COMBOBOX_SELECTED,(wxObjectEventFunction)&avVersionEditorDlg::OnCmbStatusSelect);
     Connect(ID_COMMIT_CHECK,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&avVersionEditorDlg::OnChkCommitClick);
     Connect(ID_HEADERPATH_BUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&avVersionEditorDlg::OnHeaderPathClick);
